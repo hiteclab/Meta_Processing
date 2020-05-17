@@ -1,0 +1,17 @@
+
+META_PROCESSING Version Alpha 1.0
+---------------------------------
+
+Es un lenguaje de Meta Programación para principiantes basado en el lenguaje Processing .
+Puedes escribir y leer el mismo código en diferentes lenguajes, nicialmente en Español, 
+Frances, hindi (हिन्दी), Japones (日本人), Italiano, Chino (中文), Portugues e Ingles.
+Todo el código creado con Meta_Processing es exportado como código en lenguaje Processing.
+Es un entorno de programación diseñado para no dejarte cometer errores de sintaxis. 
+
+
+Creado por Jose David Cuartas, (c) 2020 
+Licencia  GPL v.3
+Desarrollado usando Processing 3.4
+
+En el laboratorio Hiteclab, http://hiteclab.libertadores.edu.co
+Fundación Universitaria Los Libertadores, Bogotá, Colombia
