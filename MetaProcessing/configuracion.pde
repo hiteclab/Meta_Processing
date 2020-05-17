@@ -22,8 +22,9 @@ void configuracion() {
   }
   int nslash=(lista.length)-1; // determina la cantidad de slash en la ruta
   temp = lista[nslash]; //se guarda el nombre del archivo seleccionado
-  
-  String[] lista2 = split(sketchPath(""), temp+"\\"); 
+  String[] lista2 = new String[1];
+  if( OS.contains("windows") == true) lista2 = split(sketchPath(""), temp+"\\"); 
+  if( OS.contains("linux") == true || OS.contains("mac") == true) lista2 = split(sketchPath(""), temp+"/"); 
   temp = lista2[0]; //se guarda el nombre del archivo seleccionado
   metafolder=temp;
   if( OS.contains("linux") == true || OS.contains("mac") == true)sketchfolder= temp+"Projects/";
