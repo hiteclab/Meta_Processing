@@ -4,7 +4,7 @@
 
 META_PROCESSING Version Alpha 1.0
 
-Is a programming language for beginners based in the Processing language. 
+Is a meta programming language for beginners based in the Processing language. 
 You can write and read the code in different languages, initially Spanish, Française, Hindi (हिन्दी), Japanese (日本人), Italiano, Chinese (中文), Português and English.
 All the code created with Meta_Processing is exported as Processing language code.
 Is a Programming environment that do not let you make syntaxis mistakes.
@@ -19,7 +19,7 @@ Fundacion Universitaria Los Libertadores, Bogotá, Colombia
 
 META_PROCESSING Version Alpha 1.0
  
-Es un lenguaje de programación para principiantes basado en el lenguaje Processing.
+Es un meta lenguaje de programación para principiantes basado en el lenguaje Processing.
 Puedes escribir y leer el mismo código en diferentes idiomas, inicialmente en Español, Frances, Hindi (हिन्दी), Japones (日本人), Italiano, Chino (中文), Portugues e Ingles.
 Todo el código creado con Meta_Processing es exportado como código en lenguaje Processing.
 Es un entorno de programación diseñado para no dejarte cometer errores de sintaxis. 
