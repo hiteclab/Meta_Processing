@@ -1,10 +1,10 @@
 void configuracion() {
   
-  println();
-  println("META_PROCESSING Version Alpha 1.0");
-  println("Developed using Processing 3.4");
-  println("(c) 2020  Jose David Cuartas, GPL v.3\nHiteclab, http://hiteclab.libertadores.edu.co/\nFundación Universitaria Los Libertadores, Colombia");
-  println("Contact us: hiteclab@libertadores.edu.co");
+  println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+  println("  META_PROCESSING Version Alpha 1.0");
+  println("  Developed using Processing 3.4");
+  println("  (c) 2020  Jose David Cuartas, GPL v.3\n  Hiteclab, http://hiteclab.libertadores.edu.co/\n  Fundación Universitaria Los Libertadores, Colombia");
+  println("  Contact us: hiteclab@libertadores.edu.co");
 
 
 

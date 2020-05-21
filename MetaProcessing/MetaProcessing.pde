@@ -78,6 +78,7 @@ boolean fullscreen=false;
 String[] newver = new String[1];
 
 
+
   int y, posy;
   boolean ctrlPressed;
   boolean libminim = false, libvideo = false;
@@ -92,7 +93,7 @@ Grayscale  =   RGB
    */
 
   void settings() {
-       size(700, 800);
+       size(700, 800, JAVA2D);
 
   }
 
@@ -396,7 +397,8 @@ Grayscale  =   RGB
     }
 
     if (codetab==1) {
-      tlineasmouse = cargamouse.size(); 
+      tlineasmouse = cargamouse.size();
+      tlineas = tlineasmouse;
       for (int i=0; i< tlineasmouse; i++) {
         objetoml = cargamouse.getJSONObject(i);
 
@@ -406,6 +408,7 @@ Grayscale  =   RGB
 
     if (codetab==2) {
       tlineasteclado = cargateclado.size(); 
+      tlineas = tlineasteclado;
       for (int i=0; i< tlineasteclado; i++) {
         objetoml = cargateclado.getJSONObject(i);
 
@@ -415,6 +418,7 @@ Grayscale  =   RGB
 
   }
   void keyPressed() {
+    if (keyCode==ESC)exit();
   }
 
   void mousePressed() {
@@ -1040,7 +1044,7 @@ Grayscale  =   RGB
         }// fin if
       } // fin for      
       
-      textof [0] = "void keyPressed(){\nif (keyCode==ESC)exit();\n";
+      textof [0] = "void keyPressed(){\nif (keyCode==ESC)exit();\ntecla=key;\n";
       
       textof = concat(textof, texto);
 
@@ -1083,7 +1087,7 @@ Grayscale  =   RGB
           }
         }// fin if
       } // fin for      
-      textof [0] = "void mousePressed(){\n";
+      textof [0] = "void mousePressed(){\n click=mouseButton;\n";
       textof = concat(textof, texto);
 
       textof = expand(textof, textof.length+1);
@@ -1180,7 +1184,7 @@ Grayscale  =   RGB
 
       if (libminim==true) textof [0] = textof [0]+"\n canal = new Minim(this);\n nota = canal.getLineOut();\n nota.setTempo( 60 );\n nota.playNote( 0.7, 0);";
 
-      textof [0] = textof [0]+"\n} \n\nvoid draw(){\n\n ratonX=mouseX; \n ratonY=mouseY; \n ancho=width; \n alto=height; \n tecla=key; \n click=mouseButton;";
+      textof [0] = textof [0]+"\n} \n\nvoid draw(){\n\n ratonX=mouseX; \n ratonY=mouseY; \n ancho=width; \n alto=height; \n";
 
 
       texto [texto.length-1]=  texto [texto.length-1] + "\n}"; // cierra la función draw()

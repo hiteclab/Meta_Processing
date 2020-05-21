@@ -38,10 +38,16 @@ class PWindow3 extends PApplet {
     if (selectvarini ==true)lastid=-9;
     if (config==true)lastid=-9;
     objeto = objetoactual;
-    if(lastid==-1) size(ventatamx, 550); else size(ventatamx, 350);
-    if (lastid==0 || lastid==110 ) size(1024, 150); 
-    if (proyecto == true) size(500, 150);
-    if (opening==true)size(ventatamx, 550);
+    if(lastid==-1) size(ventatamx, 550, JAVA2D); else{ 
+      size(ventatamx, 330);
+      if(lastid==98|| lastid==102||lastid==115) size(ventatamx, 400);
+      else
+      if (lastid==0 || lastid==110 ) size(1024, 150); 
+      else
+      if (proyecto == true) size(500, 150);
+      else
+      if (opening==true)size(ventatamx, 550, JAVA2D);
+    }
   }
 
   void setup() {
@@ -588,9 +594,10 @@ class PWindow3 extends PApplet {
 
         renuevaobjeto.setString("condicion", condicional);
 
-        if (arguvar2==false)renuevaobjeto.setInt("valor2", int(valor2));
+        if (arguvar2==false)renuevaobjeto.setString("valor2", valor2);
         if (arguvar2==true)renuevaobjeto.setString("valor2v", valor2);
-        if (keyif == true)renuevaobjeto.setInt("valor2", int(valor2.charAt(0)));
+        //if (keyif == true)renuevaobjeto.setInt("valor2", int(valor2.charAt(0)));
+        if (keyif == true)renuevaobjeto.setString("valor2", valor2);
 
         if (objeto.getInt("id") != -1) {
           renuevaobjeto.setBoolean("visible", objeto.getBoolean("visible"));
@@ -599,6 +606,7 @@ class PWindow3 extends PApplet {
         }
 
         renuevaobjeto.setString("pde", linea);
+        println(renuevaobjeto);
 
         if (codetab==0) cargacodigo.setJSONObject(lineaclik, renuevaobjeto);         
         if (codetab==1) cargamouse.setJSONObject(lineaclik, renuevaobjeto);         
@@ -888,7 +896,7 @@ class PWindow3 extends PApplet {
     if (lastid == 105) { // positam
       if (argumentos == 1000001)valor1=typeint(valor1);
       if (argumentos == 1000010)valor2=typeint(valor2);
-      if (argumentos == 1000100)valor2=""+key;
+      if (argumentos == 1000100)valor2="'"+key+"'";
     }
     if (lastid == 116) { // texto
       if (argumentos == 1000001)px=typeint(px);
@@ -2090,7 +2098,7 @@ class PWindow3 extends PApplet {
     // muestra boton Website Github
     fill(80);
     String[] actualver = loadStrings(codefolder+"/version.txt");
-    text(idiomagui.getString("Nuevo")+" Metaprocessing: "+newver[0], 50, 125);
+    text(idiomagui.getString("Nuevo")+" Meta_Processing: "+newver[0], 50, 125);
     noStroke();
     fill(20);
     rect(41, 140, 90, 20);
@@ -2260,7 +2268,7 @@ class PWindow3 extends PApplet {
     }
     background(200);
     fill(80);
-    text(idiomagui.getString("Valor")+" "+idiomagui.getString("Variable"), 10, 20);
+    text(idiomagui.getString("Valor")+" "+idiomagui.getString("Variable")+": "+varenterasnom.get(nvarselec), 10, 20);
     rect(40, 40, width, 20);  // area de texto valor
     //fill(0,0,255);
     fill(255);
@@ -2294,7 +2302,13 @@ class PWindow3 extends PApplet {
   //-----------
 
   void proyecto() {
-
+    
+    agregarvar= false;
+    selectvarini = false;
+    opening=false;
+    seleidio=false;
+    config=false;
+    
     if (mousePressed== true) {
       // boton cancelar
       if (posy== 80 && mouseX>41 && mouseX<131) {
