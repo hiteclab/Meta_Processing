@@ -1,0 +1,232 @@
+[
+  {
+    "pde": "textSize( 220 );",
+    "tamtexto": "220",
+    "id": 117,
+    "instruccion": "tamtexto"
+  },
+  {
+    "pde": "if( tecla == 'a' ){",
+    "valor1v": "tecla",
+    "visible": true,
+    "id": 105,
+    "valor2": "'a'",
+    "condicion": "=",
+    "instruccion": "si"
+  },
+  {
+    "pde": "nota.playNote( \"C4\" );",
+    "si": true,
+    "id": 110,
+    "nota": "C4",
+    "instruccion": "tocanota"
+  },
+  {
+    "pde": "background( #2AD538 );",
+    "si": true,
+    "id": 98,
+    "colorh": "FF2AD538",
+    "instruccion": "fondo"
+  },
+  {
+    "texto": "C",
+    "pde": "text( \"C\", 500, 500 );",
+    "si": true,
+    "px": 500,
+    "py": 500,
+    "id": 116,
+    "instruccion": "texto"
+  },
+  {
+    "pde": "if( tecla == 's' ){",
+    "valor1v": "tecla",
+    "visible": true,
+    "id": 105,
+    "valor2": "'s'",
+    "condicion": "=",
+    "instruccion": "si"
+  },
+  {
+    "pde": "nota.playNote( \"D4\" );",
+    "si": true,
+    "id": 110,
+    "nota": "D4",
+    "instruccion": "tocanota"
+  },
+  {
+    "pde": "background( #C72538 );",
+    "si": true,
+    "id": 98,
+    "colorh": "FFC72538",
+    "instruccion": "fondo"
+  },
+  {
+    "texto": "D",
+    "pde": "text( \"D\", 500, 500 );",
+    "si": true,
+    "px": 500,
+    "py": 500,
+    "id": 116,
+    "instruccion": "texto"
+  },
+  {
+    "pde": "if( tecla == 'd' ){",
+    "valor1v": "tecla",
+    "visible": true,
+    "id": 105,
+    "valor2": "'d'",
+    "condicion": "=",
+    "instruccion": "si"
+  },
+  {
+    "pde": "nota.playNote( \"E4\" );",
+    "si": true,
+    "id": 110,
+    "nota": "E4",
+    "instruccion": "tocanota"
+  },
+  {
+    "pde": "background( #3348AE );",
+    "si": true,
+    "id": 98,
+    "colorh": "FF3348AE",
+    "instruccion": "fondo"
+  },
+  {
+    "texto": "E",
+    "pde": "text( \"E\", 500, 500 );",
+    "si": true,
+    "px": 500,
+    "py": 500,
+    "id": 116,
+    "instruccion": "texto"
+  },
+  {
+    "pde": "if( tecla == 'f' ){",
+    "valor1v": "tecla",
+    "visible": true,
+    "id": 105,
+    "valor2": "'f'",
+    "condicion": "=",
+    "instruccion": "si"
+  },
+  {
+    "pde": "nota.playNote( \"F4\" );",
+    "si": true,
+    "id": 110,
+    "nota": "F4",
+    "instruccion": "tocanota"
+  },
+  {
+    "pde": "background( #FCD138 );",
+    "si": true,
+    "id": 98,
+    "colorh": "FFFCD138",
+    "instruccion": "fondo"
+  },
+  {
+    "texto": "F",
+    "pde": "text( \"F\", 500, 500 );",
+    "si": true,
+    "px": 500,
+    "py": 500,
+    "id": 116,
+    "instruccion": "texto"
+  },
+  {
+    "pde": "if( tecla == 'g' ){",
+    "valor1v": "tecla",
+    "visible": true,
+    "id": 105,
+    "valor2": "'g'",
+    "condicion": "=",
+    "instruccion": "si"
+  },
+  {
+    "pde": "nota.playNote( \"G4\" );",
+    "si": true,
+    "id": 110,
+    "nota": "G4",
+    "instruccion": "tocanota"
+  },
+  {
+    "pde": "background( #F48C0E );",
+    "si": true,
+    "id": 98,
+    "colorh": "FFF48C0E",
+    "instruccion": "fondo"
+  },
+  {
+    "texto": "G",
+    "pde": "text( \"G\", 500, 500 );",
+    "si": true,
+    "px": 500,
+    "py": 500,
+    "id": 116,
+    "instruccion": "texto"
+  },
+  {
+    "pde": "if( tecla == 'h' ){",
+    "valor1v": "tecla",
+    "visible": true,
+    "id": 105,
+    "valor2": "'h'",
+    "condicion": "=",
+    "instruccion": "si"
+  },
+  {
+    "pde": "nota.playNote( \"A4\" );",
+    "si": true,
+    "id": 110,
+    "nota": "A4",
+    "instruccion": "tocanota"
+  },
+  {
+    "pde": "background( #EF1EC8 );",
+    "si": true,
+    "id": 98,
+    "colorh": "FFEF1EC8",
+    "instruccion": "fondo"
+  },
+  {
+    "texto": "A",
+    "pde": "text( \"A\", 500, 500 );",
+    "si": true,
+    "px": 500,
+    "py": 500,
+    "id": 116,
+    "instruccion": "texto"
+  },
+  {
+    "pde": "if( tecla == 'j' ){",
+    "valor1v": "tecla",
+    "visible": true,
+    "id": 105,
+    "valor2": "'j'",
+    "condicion": "=",
+    "instruccion": "si"
+  },
+  {
+    "pde": "nota.playNote( \"B4\" );",
+    "si": true,
+    "id": 110,
+    "nota": "B4",
+    "instruccion": "tocanota"
+  },
+  {
+    "pde": "background( #68B0A0 );",
+    "si": true,
+    "id": 98,
+    "colorh": "FF68B0A0",
+    "instruccion": "fondo"
+  },
+  {
+    "texto": "B",
+    "pde": "text( \"B\", 500, 500 );",
+    "si": true,
+    "px": 500,
+    "py": 500,
+    "id": 116,
+    "instruccion": "texto"
+  }
+]
