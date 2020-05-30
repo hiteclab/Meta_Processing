@@ -18,6 +18,12 @@ Fundacion Universitaria Los Libertadores, Bogotá, Colombia
 
 A fork of META_PROCESSING is [META_JAVASCRIPT](https://github.com/hiteclab/Meta_Javascript) where all the code created is exported as Javascript language code.
 
+**Download Book Meta_Processing Alpha 1.0**
+[Draft Version 1.1 English](https://github.com/hiteclab/Meta_Processing/raw/master/MetaprocessingApha1.0ENG.pdf)
+
+**Read Online Book Meta_Processing Alpha 1.0**
+[Draft Version 1.1 English](https://github.com/hiteclab/Meta_Processing/blob/master/MetaprocessingApha1.0ENG.pdf)
+
 **META_PROCESSING Alpha 1.0 Español**
  
 Es un lenguaje de meta-programación para principiantes basado en el lenguaje [Processing](https://processing.org/).
@@ -33,3 +39,9 @@ En el laboratorio Hiteclab, http://hiteclab.libertadores.edu.co
 Fundación Universitaria Los Libertadores, Bogotá, Colombia
 
 Un proyecto deribado de META_PROCESSING es [META_JAVASCRIPT](https://github.com/hiteclab/Meta_Javascript) donde todo el código creado es exportado como código en lenguaje Javascript.
+
+**Descargar Libro Meta_Processing Alpha 1.0**
+[Versión de prueba 1.1 Español](https://github.com/hiteclab/Meta_Processing/raw/master/MetaprocessingApha1.0ESP.pdf)
+
+**Leer en linea Libro Meta_Processing Alpha 1.0**
+[Versión de prueba 1.1 Español](https://github.com/hiteclab/Meta_Processing/blob/master/MetaprocessingApha1.0ESP.pdf)
