@@ -24,6 +24,9 @@ A fork of META_PROCESSING is [META_JAVASCRIPT](https://github.com/hiteclab/Meta_
 **Read Online Book Meta_Processing Alpha 1.0**
 [Draft Version 1.1 English](https://github.com/hiteclab/Meta_Processing/blob/master/MetaprocessingApha1.0ENG.pdf)
 
+
+[![Meta Processing Alpha 1.0](https://img.youtube.com/vi/bj78B7jIkTU/0.jpg)](https://www.youtube.com/watch?v=d6UnVuAlSkA&feature=youtu.be "Meta Processing Alpha 1.0")
+
 **META_PROCESSING Alpha 1.0 Español**
  
 Es un lenguaje de meta-programación para principiantes basado en el lenguaje [Processing](https://processing.org/).
