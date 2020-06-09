@@ -22,5 +22,16 @@
    "101": "ellisse",
    "105": "se",
    "118": "video",
-   "111": "per"
+   "111": "per",
+   "10": "outputdigitale",
+   "11": "inputdigitale",
+   "12": "inputanalogico",
+   "13": "servomotore",
+   "20": "oggetto",
+   "21": "collisione",
+   "30": "leggiURL",
+   "40": " ",
+   "64": "moltiplicare",
+   "65": "dividere",
+   "66": " "
 }

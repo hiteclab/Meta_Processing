@@ -22,5 +22,16 @@
    "101": "elipse",
    "105": "sim",
    "118": "vídeo",
-   "111": "para"
+   "111": "para",
+   "10": "saídadigital",
+   "11": "entradadigital",
+   "12": "entradaanalógica",
+   "13": "servo",
+   "20": "objeto",
+   "21": "colisão",
+   "30": "lerURL",
+   "40": " ",
+   "64": "multiplicar",
+   "65": "dividir",
+   "66": " "
 }

@@ -22,5 +22,16 @@
    "101": "elipse (posição x, posição y, largura, altura)",
    "105": "sim (valor1 operador valor2) O operador pode ser: >, ==, <, >=, <=, !=",
    "118": "video (nome do vídeo, posição x, posição y, largura, altura)",
-   "111": "para (do valor; à condição; valor do incremento)"
+   "111": "para (do valor; à condição; valor do incremento)",
+   "10": "saídadigital (pino arduino, valor digital) 1 = ligado / 0 = desligado",
+   "11": "entradadigital (pino arduino, variável)",
+   "12": "entradaanalógica (pino arduino, variável)",
+   "13": "servo (pino do arduino, ângulo)",
+   "20": "objeto (imagem, posição x, posição y)",
+   "21": "colisão (posição x1, posição y1, largura1, altura1, posição x2, posição y2, largura2, altura2)",
+   "30": "lerURL (variável, URL) salva o texto lido do URL na variável",
+   "40": "código avançado escrito na linguagem: Processing / Java",
+   "64": "multiplicar (variável, valor para multiplicar)",
+   "65": "dividir (variável, valor a dividir)",
+   "66": "Escreva a fórmula"
 }

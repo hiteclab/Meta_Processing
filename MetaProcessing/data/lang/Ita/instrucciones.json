@@ -22,5 +22,16 @@
    "101": "ellisse (posizione x, posizione y, larghezza, altezza)",
    "105": "se (valore1 valore operatore2) L'operatore può essere: >, ==, <, >=, <=, !=",
    "118": "video (nome del video, posizione x, posizione y, larghezza, altezza)",
-   "111": "per (da valore; a condizione; valore di incremento)"
+   "111": "per (da valore; a condizione; valore di incremento)",
+   "10": "outputdigitale (pin arduino, valore digitale) 1 = on / 0 = off",
+   "11": "inputdigitale ( perno arduino, variabile)",
+   "12": "inputanalogico ( perno arduino, variabile )",
+   "13": "servomotore ( perno arduino, angolo)",
+   "20": "oggetto (immagine, posizione x, posizione y)",
+   "21": "collisione (posizione x1, posizione y1, larghezza1, altezza1, posizione x2, posizione y2, larghezza2, altezza2)",
+   "30": "leggiURL (variabile, url) salva il testo letto dall'URL nella variabile",
+   "40": "codice avanzato scritto in lingua: Processing / Java",
+   "64": "moltiplica (variabile, valore da moltiplicare)",
+   "65": "divide (variabile, valore da dividere)",
+   "66": "Scrivi la formula"
 }

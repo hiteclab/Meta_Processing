@@ -22,5 +22,16 @@
    "101": "ellipse (x position, y position, width, height)",
    "105": "if (value1 operator value2) The operator can be: >, ==, <, >=, <=, !=",
    "118": "video (video name, x position, y position, width, height)",
-   "111": "for (from value; to condition; increment value)"
+   "111": "for (from value; to condition; increment value)",
+   "10": "digitaloutput ( arduino pin, digital value) 1 = on / 0 = off ",
+   "11": "digitalinput ( arduino pin, variable)",
+   "12": "analoginput ( pin arduino, variable )",
+   "13": "servo ( arduino pin, angle)",
+   "20": "object (image, x position, y position) ",
+   "21": "collision (position x1, position y1, width1, height1, position x2, position y2, width2, height2) ",
+   "30": "readurl (variable, url) saves the text read from the url in the variable ",
+   "40": "Advanced code written in languages: Processing / Java  ",
+   "64": "multiply (variable, value to multiply) ",
+   "65": "divide (variable, value to divide) ",
+   "66": "Write the formula "
 }
