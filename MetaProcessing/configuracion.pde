@@ -37,9 +37,14 @@ void configuracion() {
   
   iconos = loadImage("BarraOK.png");
   
+  
+
+  
+  
+  
   // Se revisa si el archivo lastopen.txt existe y se cargan todos los archivos del proyecto
   File archivo = dataFile(sketchfolder+"lastopen.txt");
-  String lastopenfile = archivo.getPath();
+  //String lastopenfile = archivo.getPath();
   existe = archivo.isFile();
   existeproyecto=false;
   
@@ -50,7 +55,7 @@ void configuracion() {
   
   // se revisa si existe el proyecto al que apunta el archivo lastopen.txt
   archivo = dataFile(sketchfolder+"/"+proyectonombre+"/"+proyectonombre+".json");
-  lastopenfile = archivo.getPath();
+  //lastopenfile = archivo.getPath();
   existeproyecto = archivo.isFile();
   }
   if(existeproyecto == true){
@@ -69,9 +74,12 @@ void configuracion() {
         } else fullscreen=true;
       
         // poner en el archivo configuracion.json en la key llamada "cuadros" el volor 0 para tener la velocidad por defecto de processing
-        if (configuration.getJSONObject(1).getInt("cuadros")!= 0) frameRate(configuration.getJSONObject(1).getInt("cuadros"));
-        if (configuration.getJSONObject(1).getInt("cuadros")!= 0) velocidad= configuration.getJSONObject(1).getInt("cuadros");
+        if (configuration.getJSONObject(1).getInt("cuadros")!= 0) {
+          frameRate(configuration.getJSONObject(1).getInt("cuadros"));
+        //if (configuration.getJSONObject(1).getInt("cuadros")!= 0) 
+          velocidad= configuration.getJSONObject(1).getInt("cuadros");}
         frameRate(velocidad);
+        port= configuration.getJSONObject(2).getInt("puerto");
     }
   
    else {
@@ -96,6 +104,7 @@ void configuracion() {
       runwindow=false;
       codetab=0;
       proyectonombre="meta";
+      port=0;
        
       //line="";
       line=""+idiomaactual.get(str(-1));
@@ -114,8 +123,6 @@ void configuracion() {
     
   }
   
-
-
 
   varenterasval = new IntList();
   varenterasnom = new StringList();

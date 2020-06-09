@@ -13,6 +13,9 @@ class PWindow3 extends PApplet {
   int x=0, y=0;
   char nota = 'C'; 
   int octava =4;
+  int pin;
+  int angulo;
+  boolean falsetrue=false;
   String px, py, ancho, alto, pxt3, pyt3, valor1, valor2, condicional;
   int r, g, b=56, rf=250, gf, bf, gray, grayf=50;
   String c, instru;
@@ -38,7 +41,7 @@ class PWindow3 extends PApplet {
     if (selectvarini ==true)lastid=-9;
     if (config==true)lastid=-9;
     objeto = objetoactual;
-    if(lastid==-1) size(ventatamx, 550, JAVA2D); else{ 
+    if(lastid==-1) size(ventatamx, 610, JAVA2D); else{ 
       size(ventatamx, 330);
       if(lastid==98|| lastid==102||lastid==115) size(ventatamx, 400);
       else
@@ -73,16 +76,24 @@ class PWindow3 extends PApplet {
     if (agregarvar== true) variable();
     if (selectvarini == true) variableini();
     if (lastid == 110) nota();
+    if (lastid == 10) salidadigital();
+    if (lastid == 11) entradadigital();
+    if (lastid == 12) entradaanalogica();
+    if (lastid == 13) servo();
     if (lastid == 108) linea();
     if (lastid == 100) sonido();
     if (lastid == 51) triangulo();
     if (lastid == 109 || lastid == 118 ) imagen();
     if (lastid == 116) texto();
     if (lastid == 117) tamtexto();
-    if (lastid == 97) aleatorio();
-    if (lastid == 61) aleatorio();
-    if (lastid == 62) aleatorio();
-    if (lastid == 63) aleatorio();
+    if (lastid == 97) aleatorio(); // aleatorio
+    if (lastid == 61) aleatorio(); // asignar
+    if (lastid == 62) aleatorio(); // sumar
+    if (lastid == 63) aleatorio(); // restar
+    if (lastid == 64) aleatorio(); // multiplicar
+    if (lastid == 65) aleatorio(); // dividir
+    if (lastid == 66) formula(); // formula
+    if (lastid == 40) formula(); // formula
     if (lastid == 105) condicion();
     if (lastid == -1) instruccion();
     if (opening==true) splash();
@@ -226,98 +237,130 @@ class PWindow3 extends PApplet {
       valor2 ="";
       condicional ="";
       temp ="";
-
-      if (posy==20) { // opcion comentario
-        lastid=0;
-        instru="";             
-      }
-      if (posy==60) { // opcion linea
-        lastid=108;
-      }
-      if (posy==80) { // opcion triangulo
-        lastid=51;
-      }
-      if (posy==100) { // opcion rectangulo
-        lastid=114;
-      }
-      if (posy==120) { // opcion elipse
-        lastid=101;
-      }
-      if (posy==140) { // opcion texto
-        lastid=116;
-      }
-      if (posy==160) { // opcion imagen
-        lastid=109;
-      }
-      if (posy==200) { // opcion fondo
-        lastid=98;
-      }
-      if (posy==220) { // opcion colorlinea
-        lastid=115;
-      }
-      if (posy==240) { // opcion relleno
-        lastid=102;
-      }
-      if (posy==260) { // opcion sinrelleno
-        JSONObject renuevaobjeto = new JSONObject();
-        String linea ="";
-        if (objeto.isNull("si") == false)renuevaobjeto.setBoolean("si", true);
-        if (objeto.isNull("sino") == false)renuevaobjeto.setBoolean("sino", true);
-        if (objeto.isNull("encapsulado") == false)renuevaobjeto.setBoolean("encapsulado", true);
-        renuevaobjeto.setString("instruccion", "sinrelleno");
-        renuevaobjeto.setInt("id", -102);
-        linea = "noFill();";
-        renuevaobjeto.setString("pde", linea);
-        if (codetab==0) cargacodigo.setJSONObject(lineaclik, renuevaobjeto);         
-        if (codetab==1) cargamouse.setJSONObject(lineaclik, renuevaobjeto);         
-        if (codetab==2) cargateclado.setJSONObject(lineaclik, renuevaobjeto);
-        exit();
-        surface.setVisible(false);
-      }
-      if (posy==280) { // opcion sinlinea
-        JSONObject renuevaobjeto = new JSONObject();
-        String linea ="";
-        if (objeto.isNull("si") == false)renuevaobjeto.setBoolean("si", true);
-        if (objeto.isNull("sino") == false)renuevaobjeto.setBoolean("sino", true);
-        if (objeto.isNull("encapsulado") == false)renuevaobjeto.setBoolean("encapsulado", true);
-        renuevaobjeto.setString("instruccion", "sinlinea");
-        renuevaobjeto.setInt("id", -115);
-        linea = "noStroke();";
-        renuevaobjeto.setString("pde", linea);
-        if (codetab==0) cargacodigo.setJSONObject(lineaclik, renuevaobjeto);         
-        if (codetab==1) cargamouse.setJSONObject(lineaclik, renuevaobjeto);         
-        if (codetab==2) cargateclado.setJSONObject(lineaclik, renuevaobjeto);
-        exit();
-        surface.setVisible(false);
-      }
-      if (posy==300) { // opcion tamtexto
-        lastid=117;
-      }
-      if (posy==340) { // opcion tocanota
-        lastid=110;
-      }
-      if (posy==360) { // opcion sonido
-        lastid=100;
-      }
-      if (posy==380) { // opcion video
-        lastid=118;
-      }
-      if (posy==420) { // opcion if
-        lastid=105;
-      }    
-      if (posy==460) { // opcion asignar
-        lastid=61;
-      }
-      if (posy==480) { // opcion sumar
-        lastid=62;
-      }
-      if (posy==500) { // opcion restar
-        lastid=63;
-      }
-      if (posy==520) { // opcion aleatorio
-        lastid=97;
-      }
-    } // Fin agregar instrucción
+    if(mouseX<width/3){
+          if (posy==20) { // opcion comentario
+            lastid=0;
+            instru="";             
+          }
+          if (posy==60) { // opcion linea
+            lastid=108;
+          }
+          if (posy==80) { // opcion triangulo
+            lastid=51;
+          }
+          if (posy==100) { // opcion rectangulo
+            lastid=114;
+          }
+          if (posy==120) { // opcion elipse
+            lastid=101;
+          }
+          if (posy==140) { // opcion texto
+            lastid=116;
+          }
+          if (posy==160) { // opcion imagen
+            lastid=109;
+          }
+          if (posy==200) { // opcion fondo
+            lastid=98;
+          }
+          if (posy==220) { // opcion colorlinea
+            lastid=115;
+          }
+          if (posy==240) { // opcion relleno
+            lastid=102;
+          }
+          if (posy==260) { // opcion sinrelleno
+            JSONObject renuevaobjeto = new JSONObject();
+            String linea ="";
+            if (objeto.isNull("si") == false)renuevaobjeto.setBoolean("si", true);
+            if (objeto.isNull("sino") == false)renuevaobjeto.setBoolean("sino", true);
+            if (objeto.isNull("encapsulado") == false)renuevaobjeto.setBoolean("encapsulado", true);
+            renuevaobjeto.setString("instruccion", "sinrelleno");
+            renuevaobjeto.setInt("id", -102);
+            linea = "noFill();";
+            renuevaobjeto.setString("pde", linea);
+            if (codetab==0) cargacodigo.setJSONObject(lineaclik, renuevaobjeto);         
+            if (codetab==1) cargamouse.setJSONObject(lineaclik, renuevaobjeto);         
+            if (codetab==2) cargateclado.setJSONObject(lineaclik, renuevaobjeto);
+            exit();
+            surface.setVisible(false);
+          }
+          if (posy==280) { // opcion sinlinea
+            JSONObject renuevaobjeto = new JSONObject();
+            String linea ="";
+            if (objeto.isNull("si") == false)renuevaobjeto.setBoolean("si", true);
+            if (objeto.isNull("sino") == false)renuevaobjeto.setBoolean("sino", true);
+            if (objeto.isNull("encapsulado") == false)renuevaobjeto.setBoolean("encapsulado", true);
+            renuevaobjeto.setString("instruccion", "sinlinea");
+            renuevaobjeto.setInt("id", -115);
+            linea = "noStroke();";
+            renuevaobjeto.setString("pde", linea);
+            if (codetab==0) cargacodigo.setJSONObject(lineaclik, renuevaobjeto);         
+            if (codetab==1) cargamouse.setJSONObject(lineaclik, renuevaobjeto);         
+            if (codetab==2) cargateclado.setJSONObject(lineaclik, renuevaobjeto);
+            exit();
+            surface.setVisible(false);
+          }
+          if (posy==300) { // opcion tamtexto
+            lastid=117;
+          }
+          if (posy==340) { // opcion tocanota
+            lastid=110;
+          }
+          if (posy==360) { // opcion sonido
+            lastid=100;
+          }
+          if (posy==380) { // opcion video
+            lastid=118;
+          }
+          if (posy==420) { // opcion if
+            lastid=105;
+          }    
+          if (posy==460) { // opcion asignar
+            lastid=61;
+          }
+          if (posy==480) { // opcion sumar
+            lastid=62;
+          }
+          if (posy==500) { // opcion restar
+            lastid=63;
+          }
+          if (posy==520) { // opcion multiplicar
+            lastid=64;
+          }
+          if (posy==540) { // opcion dividir
+            lastid=65;
+          }
+          if (posy==560) { // opcion aleatorio
+            lastid=97;
+          }
+          if (posy==580) { // opcion formula
+            lastid=66;
+            instru="";
+          }          
+    } // opciones primera columna
+    if(mouseX>width/3){
+          if (posy==20) { // opcion salida ditital
+            lastid=10;
+          }
+          if (posy==40) { // opcion entrada digital
+            lastid=11;
+          }
+          if (posy==60) { // opcion entrada analogica
+            lastid=12;
+          }    
+          if (posy==80) { // opcion servo
+            lastid=13;
+          } 
+          if (posy==120) { // opcion código nativo
+            lastid=40;
+            instru="";
+          } 
+          if (posy==140) { // opcion bloque código
+            lastid=99;
+          } 
+}
+  } // Fin agregar instrucción
 
     ///////////////////////////////////////////    
 
@@ -606,7 +649,6 @@ class PWindow3 extends PApplet {
         }
 
         renuevaobjeto.setString("pde", linea);
-        println(renuevaobjeto);
 
         if (codetab==0) cargacodigo.setJSONObject(lineaclik, renuevaobjeto);         
         if (codetab==1) cargamouse.setJSONObject(lineaclik, renuevaobjeto);         
@@ -621,7 +663,119 @@ class PWindow3 extends PApplet {
 
 
 
-    if (lastid == 97 || lastid == 61 || lastid == 62 || lastid == 63) {  // ALEATORIO
+    if (lastid == 10 || lastid == 11 || lastid == 12 || lastid == 13 ) {  // ARDUINO
+
+      //if (posy== 80 )  argumentos= 1000010; // casilla y
+      
+      
+   if (lastid==10 && posy==40) { // seleccionar casilla salidadigital
+      if (x==100) {falsetrue=!falsetrue; pin =0; } // pin 0
+      if (x==120) {falsetrue=!falsetrue; pin =1; } // pin 1
+      if (x==140) {falsetrue=!falsetrue; pin =2; } // pin 2
+      if (x==160) {falsetrue=!falsetrue; pin =3; } // pin 3
+      if (x==180) {falsetrue=!falsetrue; pin =4; } // pin 4
+      if (x==200) {falsetrue=!falsetrue; pin =5; } // pin 5
+      if (x==220) {falsetrue=!falsetrue; pin =6; } // pin 6
+      if (x==240) {falsetrue=!falsetrue; pin =7; } // pin 7
+      if (x==260) {falsetrue=!falsetrue; pin =8; } // pin 8
+      if (x==280) {falsetrue=!falsetrue; pin =9; } // pin 9
+      if (x==300) {falsetrue=!falsetrue; pin =10; } // pin 10
+      if (x==320) {falsetrue=!falsetrue; pin =11; } // pin 11
+      if (x==340) {falsetrue=!falsetrue; pin =12; } // pin 12
+      if (x==360) {falsetrue=!falsetrue; pin =13; } // pin 13
+    } else
+
+   if ( lastid==11 || lastid==13 && posy==40) { // seleccionar casilla salidadigital
+      if (x==100) { pin =0; } // pin 0
+      if (x==120) { pin =1; } // pin 1
+      if (x==140) { pin =2; } // pin 2
+      if (x==160) { pin =3; } // pin 3
+      if (x==180) { pin =4; } // pin 4
+      if (x==200) { pin =5; } // pin 5
+      if (x==220) { pin =6; } // pin 6
+      if (x==240) { pin =7; } // pin 7
+      if (x==260) { pin =8; } // pin 8
+      if (x==280) { pin =9; } // pin 9
+      if (x==300) { pin =10; } // pin 10
+      if (x==320) { pin =11; } // pin 11
+      if (x==340) { pin =12; } // pin 12
+      if (x==360) { pin =13; } // pin 13
+    } else
+    
+   if ( lastid==12 && posy==40) { // seleccionar casilla salidadigital
+      if (x==100) { pin =0; } // pin 0
+      if (x==120) { pin =1; } // pin 1
+      if (x==140) { pin =2; } // pin 2
+      if (x==160) { pin =3; } // pin 3
+      if (x==180) { pin =4; } // pin 4
+      if (x==200) { pin =5; } // pin 5
+    }     
+
+      ///* // botones  Var ARGUMENTO 1
+      if (posy== 100 && mouseX>293 && mouseX<325) {
+        arguvar1=true;
+        lastargu=1;
+        variables = new PWindow4();
+        if (varclicked==true) { 
+          varclicked=false;
+        } else arguvar1=false;
+      } 
+
+      ///* // botón  # ARGUMENTO 1
+      if (posy== 100 && mouseX>272 && mouseX<287) {
+        arguvar1=false;
+        lastargu=1;
+        px = "";
+      }
+
+
+      // boton cancelar
+      if (posy== 220 && mouseX>41 && mouseX<131) {
+        exit();
+        surface.setVisible(false);
+      }
+      // boton aplicar ALEATORIO
+      if (posy== 220 && mouseX>170 && mouseX<260) {
+        JSONObject renuevaobjeto = new JSONObject();
+        String linea ="";
+        if (objeto.isNull("si") == false)renuevaobjeto.setBoolean("si", true);
+        if (objeto.isNull("sino") == false)renuevaobjeto.setBoolean("sino", true);
+        if (objeto.isNull("encapsulado") == false)renuevaobjeto.setBoolean("encapsulado", true);
+        
+        if(lastid == 11) renuevaobjeto.setString("instruccion", "entradadigital");
+        if(lastid == 12) renuevaobjeto.setString("instruccion", "entradaanalogica");
+        if(lastid == 13) renuevaobjeto.setString("instruccion", "servo");
+
+
+        if(lastid == 11) linea = "arduino.pinMode("+pin+", Arduino.INPUT_PULLUP);\n"+px+" = arduino.digitalRead("+pin+");\n"; // entradigital
+        if(lastid == 12) linea = px+" = arduino.analogRead("+pin+");\n"; //entradaanalogica
+        if(lastid == 13) linea = "arduino.pinMode("+pin+", Arduino.SERVO);\narduino.servoWrite("+pin+", "+px+");";
+        
+
+        renuevaobjeto.setInt("id", lastid);
+        renuevaobjeto.setInt("pin", int(pin));
+        renuevaobjeto.setString("variable", px);
+
+        renuevaobjeto.setString("pde", linea);
+        println(renuevaobjeto);
+
+        if (codetab==0) cargacodigo.setJSONObject(lineaclik, renuevaobjeto);         
+        if (codetab==1) cargamouse.setJSONObject(lineaclik, renuevaobjeto);         
+        if (codetab==2) cargateclado.setJSONObject(lineaclik, renuevaobjeto);
+        ventana=false;
+        exit();
+        surface.setVisible(false);
+      }
+    } // fin Arduino
+    
+    
+    
+    ///////////////////////////////////////////////////////////////////////////
+
+
+
+
+    if (lastid == 97 || lastid == 61 || lastid == 62 || lastid == 63 || lastid == 64 || lastid == 65) {  // ALEATORIO
 
       if (posy== 80 )  argumentos= 1000010; // casilla y
 
@@ -652,16 +806,20 @@ class PWindow3 extends PApplet {
         if(lastid == 61) renuevaobjeto.setString("instruccion", "asignar");
         if(lastid == 62) renuevaobjeto.setString("instruccion", "sumar");
         if(lastid == 63) renuevaobjeto.setString("instruccion", "restar");
+        if(lastid == 64) renuevaobjeto.setString("instruccion", "multiplicar");
+        if(lastid == 65) renuevaobjeto.setString("instruccion", "dividir");
 
         if(lastid == 97) linea = ""+px+" = random("+py+");";
         if(lastid == 61) linea = ""+px+" = "+py+";";
         if(lastid == 62) linea = ""+px+" = "+px+" + "+py+";";
         if(lastid == 63) linea = ""+px+" = "+px+" - "+py+";";
+        if(lastid == 64) linea = ""+px+" = "+px+" * "+py+";";
+        if(lastid == 65) linea = ""+px+" = "+px+" / "+py+";";
 
         renuevaobjeto.setInt("id", lastid);
         renuevaobjeto.setString("variable", px);
         if(lastid == 97) renuevaobjeto.setInt("vmaximo", int(py));
-        if(lastid == 61 || lastid == 62 || lastid == 63) renuevaobjeto.setString("valor", py);
+        if(lastid == 61 || lastid == 62 || lastid == 63 || lastid == 64 || lastid == 65) renuevaobjeto.setString("valor", py);
 
         renuevaobjeto.setString("pde", linea);
 
@@ -756,6 +914,11 @@ class PWindow3 extends PApplet {
     ///////////////////////////////////////////////////////////////////////////
 
     if (lastid == 116) {  // TEXTO
+      if(posy== 20) { // casilla variable texot
+        lastargu=3;
+        variables = new PWindow4();
+        if (varclicked==true) varclicked=false;
+      }
       if (posy== 40)  arguvar0=true; // casilla nombre
       if (arguvar1==false && posy== 80 ) { 
         arguvar0=false; 
@@ -882,6 +1045,25 @@ class PWindow3 extends PApplet {
       exit();
       
     }
+    
+
+// botones cambiar puerto en configuración
+if (config==true){
+
+      if(posy==200 && mouseX>50 && mouseX<70) if(port > 0) { 
+          port--; 
+          configuration.getJSONObject(2).setInt("puerto",port);
+          saveJSONArray(configuration, sketchfolder+proyectonombre+"/configuracion.json");
+        }
+      if(posy==200 && mouseX>90 && mouseX<110) if(port < Arduino.list()[0].length()) { 
+          port++; 
+          configuration.getJSONObject(2).setInt("puerto",port);
+          saveJSONArray(configuration, sketchfolder+proyectonombre+"/configuracion.json");
+        }
+}
+    
+    
+    
   } // fin mousePressed
 
   void keyPressed() {
@@ -908,11 +1090,15 @@ class PWindow3 extends PApplet {
       if (argumentos == 1100000)pyt3=typeint(pyt3);
     }
     if (lastid == 0) instru = typetext(instru); // comentario
+    if (lastid == 66) instru = typetext(instru); // formula
+    if (lastid == 40) instru = typetext(instru); // código nativo
+    
     if (agregarvar ==true) temp = typetext(temp); // variable
     if (selectvarini == true) temp = typefloat(temp); // valor para inializar la variable seleccionada
-    if (proyecto == true) proyectonombre = typetext(proyectonombre); // nombre proyecto
+    if (proyecto == true) {proyectonombre = typetext(proyectonombre); proyectonombre = proyectonombre.toLowerCase();} // nombre proyecto se usa la funcion toLowerCase para que no se escriba el nombre con letras mayusculas para evitar errores de ejecucion con libreria firmata arduino
     if (lastid == 117) temp=typeint(temp); // tamtexto
-    if (lastid == 97 || lastid == 61 || lastid == 62 || lastid == 63) py=typefloat(py); // tamtexto
+    if (lastid == 13) {px=typeint(px); println("servo");}// servo
+    if (lastid == 97 || lastid == 61 || lastid == 62 || lastid == 63 || lastid == 64 || lastid == 65) py=typefloat(py); // tamtexto
 
   }
 
@@ -968,7 +1154,7 @@ class PWindow3 extends PApplet {
   //--------------
 
   void splash() {
-    surface.setTitle("META_PROCESSING Version Alpha 1.0");
+    surface.setTitle("META_PROCESSING Version Alpha 1.1");
     if (s<99)s = millis() / 100;
     fill(0, 0, 255);
     if (s>89)fill(0, 255, 0);
@@ -978,7 +1164,7 @@ class PWindow3 extends PApplet {
     image(logo, logo2x, 60);
     textAlign(CENTER, CENTER);
     fill(255);
-    text("META_PROCESSING Version Alpha 1.0", 255, 340);
+    text("META_PROCESSING Version Alpha 1.1", 255, 340);
     fill(120);
     text("Developed using Processing 3.4", 255, 360);
     text("(ɔ) 2020  Jose David Cuartas, GPL v.3\nHiteclab, http://hiteclab.libertadores.edu.co/\nFundación Universitaria Los Libertadores, Colombia", 255, 440);
@@ -999,7 +1185,8 @@ class PWindow3 extends PApplet {
     posy= mouseY-mouseY % 20;
     y= ((posy-40)/20)+1;
     fill(120);
-    if (posy>0 && posy!=40 && posy!=180 && posy!=320 && posy!=400 )rect(0, posy, width, 20);
+    if (posy>0 && posy!=40 && posy!=180 && posy!=320 && posy!=400 && mouseX<width/3)rect(0, posy, width/3, 20);
+    if (posy>0 && posy!=100 && posy!=180 && posy!=320 && posy!=400 && mouseX>width/3)rect(width/3, posy, width/3, 20);
 
     // Documentar
     fill(120);
@@ -1030,10 +1217,31 @@ class PWindow3 extends PApplet {
     text(idiomagui.getString("Matemáticas"), 10, 457);
 
     fill(255);
-    text(""+idiomaactual.get(str(61)), 40, 477);
-    text(""+idiomaactual.get(str(62)), 40, 497);
-    text(""+idiomaactual.get(str(63)), 40, 517);
-    text(""+idiomaactual.get(str(97)), 40, 537);
+    text(""+idiomaactual.get(str(61)), 40, 477); // asignar
+    text(""+idiomaactual.get(str(62)), 40, 497); // sumar
+    text(""+idiomaactual.get(str(63)), 40, 517); // restar
+    text(""+idiomaactual.get(str(64)), 40, 537); // multiplicar
+    text(""+idiomaactual.get(str(65)), 40, 557); // dividir
+    text(""+idiomaactual.get(str(97)), 40, 577); // aleatorio
+    text(idiomagui.getString("fórmula"), 40, 597); // fórmula
+    fill(120);
+    text("Arduino", (width/3)+10, 17);
+
+    fill(255);
+    text(""+idiomaactual.get(str(10)), (width/3)+40, 37);
+    text(""+idiomaactual.get(str(11)), (width/3)+40, 57);
+    text(""+idiomaactual.get(str(12)), (width/3)+40, 77);
+    text(""+idiomaactual.get(str(13)), (width/3)+40, 97);
+    
+    fill(120);
+    
+    text(idiomagui.getString("Avanzadas"), (width/3)+10, 117);
+
+    fill(255);
+    text(idiomagui.getString("código")+" "+idiomagui.getString("nativo"), (width/3)+40, 137);
+    //text(""+idiomaactual.get(str(41)), (width/3)+40, 157);
+    text(idiomagui.getString("bloque")+" "+idiomagui.getString("código"), (width/3)+40, 157);
+    
   }
 
   //--------------
@@ -1320,7 +1528,9 @@ class PWindow3 extends PApplet {
       if (lastid== 97 && objeto.isNull("vmaximo") == false) py= ""+objeto.get("vmaximo"); else
       if (lastid== 61 && objeto.isNull("valor") == false) py= ""+objeto.get("valor"); else
       if (lastid== 62 && objeto.isNull("valor") == false) py= ""+objeto.get("valor"); else
-      if (lastid== 63 && objeto.isNull("valor") == false) py= ""+objeto.get("valor"); 
+      if (lastid== 63 && objeto.isNull("valor") == false) py= ""+objeto.get("valor"); else
+      if (lastid== 64 && objeto.isNull("valor") == false) py= ""+objeto.get("valor"); else
+      if (lastid== 65 && objeto.isNull("valor") == false) py= ""+objeto.get("valor"); 
       else py="";
       aleatorio=true;
     }
@@ -1357,6 +1567,8 @@ class PWindow3 extends PApplet {
     if(lastid == 61)text(idiomaactual.getString(str(61))+" "+idiomagui.getString("Valor")+":", 30, 95);
     if(lastid == 62)text(idiomaactual.getString(str(62))+" "+idiomagui.getString("Valor")+":", 30, 95);
     if(lastid == 63)text(idiomaactual.getString(str(63))+" "+idiomagui.getString("Valor")+":", 30, 95);
+    if(lastid == 64)text(idiomaactual.getString(str(64))+" "+idiomagui.getString("Valor")+":", 30, 95);
+    if(lastid == 65)text(idiomaactual.getString(str(65))+" "+idiomagui.getString("Valor")+":", 30, 95);
     rect(168, 80, 100, 20); // area de texto
     if (posy== 80||argumentos== 1000010) {
       fill(80);
@@ -1722,6 +1934,13 @@ class PWindow3 extends PApplet {
       varclicked=false;
     }
 
+    // si se lecciona variable texto
+    if (varclicked==true && lastargu==3) {
+      temp = temp+"\"+"+varenterasnom.get(nvarselec)+"+\""; 
+      arguvar3=true; 
+      varclicked=false;
+    }
+
 
     if (texto==false) {
       if (objeto.isNull("px") == false) px= ""+objeto.get("px");
@@ -1746,6 +1965,12 @@ class PWindow3 extends PApplet {
     else text(""+idiomaactual.get(str(lastid)), 10, 20);
 
 
+    // var texto
+    fill(255);
+    if (posy== 20 && mouseX>168 && mouseX<200)fill(80);
+    rect(168, 20, 32, 20); // cuadro var
+    fill(0);
+    text("Vr", 170, 35);
 
     ///* // botones  # y Var ARGUMENTO 1
     fill(255);
@@ -1830,11 +2055,608 @@ class PWindow3 extends PApplet {
     stroke(0);
   }  // fin TEXTO
 
+  //----------------
+  //  salidadigital
+  //----------------
+
+  void salidadigital() {
+
+    if (mousePressed== true) {
+      // boton cancelar
+      if (posy== 100 && mouseX>41 && mouseX<131) {
+
+        exit();
+        surface.setVisible(false);
+      }
+      // boton aplicar
+      if (posy== 100 && mouseX>170 && mouseX<260) {
+
+        JSONObject renuevaobjeto = new JSONObject();
+        String linea ="";
+        if(falsetrue==false)linea = "arduino.digitalWrite( "+pin+", Arduino.LOW );"; else linea = "arduino.digitalWrite( "+pin+", Arduino.HIGH );";
+        if (objeto.isNull("si") == false)renuevaobjeto.setBoolean("si", true);
+        if (objeto.isNull("sino") == false)renuevaobjeto.setBoolean("sino", true);
+        if (objeto.isNull("encapsulado") == false)renuevaobjeto.setBoolean("encapsulado", true);
+        renuevaobjeto.setString("instruccion", "salidadigital");
+        renuevaobjeto.setInt("id", lastid);
+        renuevaobjeto.setInt("pin", int(pin));
+        renuevaobjeto.setInt("valor", int(falsetrue));
+        renuevaobjeto.setString("pde", linea);
+        if (codetab==0) cargacodigo.setJSONObject(lineaclik, renuevaobjeto);         
+        if (codetab==1) cargamouse.setJSONObject(lineaclik, renuevaobjeto);         
+        if (codetab==2) cargateclado.setJSONObject(lineaclik, renuevaobjeto);
+        exit();
+        surface.setVisible(false);
+      }
+    }
+
+    x = mouseX-mouseX % 20;
+
+    background(200);
+
+
+    if (posy==40) {
+      fill(128);
+      if (x==100)rect(100, 40, 20, 20);
+      if (x==120)rect(120, 40, 20, 20); 
+      if (x==140)rect(140, 40, 20, 20);
+      if (x==160)rect(160, 40, 20, 20);
+      if (x==180)rect(180, 40, 20, 20);
+      if (x==200)rect(200, 40, 20, 20); 
+      if (x==220)rect(220, 40, 20, 20);
+      if (x==240)rect(240, 40, 20, 20);
+      if (x==260)rect(260, 40, 20, 20);
+      if (x==280)rect(280, 40, 20, 20);
+      if (x==300)rect(300, 40, 20, 20);
+      if (x==320)rect(320, 40, 20, 20);
+      if (x==340)rect(340, 40, 20, 20);
+      if (x==360)rect(360, 40, 20, 20);
+    }
+    
+    // dibuja las casillas vacias de los pines
+    noFill();
+    stroke(255);
+    rect(100, 40, 20, 20);
+    rect(120, 40, 20, 20); 
+    rect(140, 40, 20, 20);
+    rect(160, 40, 20, 20);
+    rect(180, 40, 20, 20);
+    rect(200, 40, 20, 20); 
+    rect(220, 40, 20, 20);
+    rect(240, 40, 20, 20);
+    rect(260, 40, 20, 20);
+    rect(280, 40, 20, 20);
+    rect(300, 40, 20, 20);
+    rect(320, 40, 20, 20);
+    rect(340, 40, 20, 20);
+    rect(360, 40, 20, 20);
+    
+    //Resalta la casilla del pin activado
+    if(falsetrue == true)fill(255); else fill(0);
+    if (pin== 0 ){rect(100, 40, 20, 20); fill(128); text(int(falsetrue),106, 58);}
+    if (pin== 1 ){rect(120, 40, 20, 20); fill(128); text(int(falsetrue),126, 58);}
+    if (pin== 2 ){rect(140, 40, 20, 20); fill(128); text(int(falsetrue),146, 58);}
+    if (pin== 3 ){rect(160, 40, 20, 20); fill(128); text(int(falsetrue),166, 58);}
+    if (pin== 4 ){rect(180, 40, 20, 20); fill(128); text(int(falsetrue),186, 58);}
+    if (pin== 5 ){rect(200, 40, 20, 20); fill(128); text(int(falsetrue),206, 58);}
+    if (pin== 6 ){rect(220, 40, 20, 20); fill(128); text(int(falsetrue),226, 58);}
+    if (pin== 7 ){rect(240, 40, 20, 20); fill(128); text(int(falsetrue),246, 58);}
+    if (pin== 8 ){rect(260, 40, 20, 20); fill(128); text(int(falsetrue),266, 58);}
+    if (pin== 9 ){rect(280, 40, 20, 20); fill(128); text(int(falsetrue),286, 58);}
+    if (pin==10 ){rect(300, 40, 20, 20); fill(128); text(int(falsetrue),306, 58);}
+    if (pin==11 ){rect(320, 40, 20, 20); fill(128); text(int(falsetrue),326, 58);}
+    if (pin==12 ){rect(340, 40, 20, 20); fill(128); text(int(falsetrue),346, 58);}
+    if (pin==13 ){rect(360, 40, 20, 20); fill(128); text(int(falsetrue),366, 58);}
+
+
+    fill(80);
+    if (objeto.isNull("nombre") == false) text(instru, 10, 20); 
+    else text(""+idiomaactual.get(str(lastid)), 10, 20);
+    
+    fill(128);
+    text("Pin:", 30, 58);
+
+    fill(140);
+    text("0",104,76);
+    text("1",124, 38); 
+    text("2",144, 76);
+    text("3",164, 38);
+    text("4",184, 78);
+    text("5",204, 38); 
+    text("6",224, 78);
+    text("7",244, 38);
+    text("8",264, 78);
+    text("9",284, 38);
+    text("10",301, 78);
+    text("11",321, 38);
+    text("12",341, 78);
+    text("13",361, 38);
+
+    // botones Cancelar y Aplicar
+    noStroke();
+    fill(20);
+    rect(41, 100, 90, 20);
+    if (posy== 100 && mouseX>41 && mouseX<131) {
+      fill(100);
+      rect(41, 100, 90, 20);
+    }
+    fill(255);
+    text(idiomagui.getString("Cancelar"), 50, 115);
+
+
+    fill(20);
+    rect(170, 100, 90, 20);
+    if (posy== 100 && mouseX>170 && mouseX<260) {
+      fill(100);
+      rect(170, 100, 90, 20);
+    }
+    fill(255);
+    text(idiomagui.getString("Aplicar"), 180, 115);
+    stroke(0);
+  }
+
+
+  //----------------
+  //  entradadigital
+  //----------------
+
+  void entradadigital() {
+    x = mouseX-mouseX % 20;
+    background(200);
+
+    if (arduinoline==false) {
+      if (objeto.isNull("variable") == false) px= ""+objeto.get("variable"); 
+      else px="";
+      if (objeto.isNull("pin") == false) pin= objeto.getInt("pin"); 
+      else pin=0;
+      arduinoline=true;
+    }
+
+    if (posy==40) {
+      fill(128);
+      if (x==100)rect(100, 40, 20, 20);
+      if (x==120)rect(120, 40, 20, 20); 
+      if (x==140)rect(140, 40, 20, 20);
+      if (x==160)rect(160, 40, 20, 20);
+      if (x==180)rect(180, 40, 20, 20);
+      if (x==200)rect(200, 40, 20, 20); 
+      if (x==220)rect(220, 40, 20, 20);
+      if (x==240)rect(240, 40, 20, 20);
+      if (x==260)rect(260, 40, 20, 20);
+      if (x==280)rect(280, 40, 20, 20);
+      if (x==300)rect(300, 40, 20, 20);
+      if (x==320)rect(320, 40, 20, 20);
+      if (x==340)rect(340, 40, 20, 20);
+      if (x==360)rect(360, 40, 20, 20);
+    }
+    
+    // dibuja las casillas vacias de los pines
+    noFill();
+    stroke(255);
+    rect(100, 40, 20, 20);
+    rect(120, 40, 20, 20); 
+    rect(140, 40, 20, 20);
+    rect(160, 40, 20, 20);
+    rect(180, 40, 20, 20);
+    rect(200, 40, 20, 20); 
+    rect(220, 40, 20, 20);
+    rect(240, 40, 20, 20);
+    rect(260, 40, 20, 20);
+    rect(280, 40, 20, 20);
+    rect(300, 40, 20, 20);
+    rect(320, 40, 20, 20);
+    rect(340, 40, 20, 20);
+    rect(360, 40, 20, 20);
+    
+    //Resalta la casilla del pin activado
+    fill(255);
+    if (pin== 0 )rect(100, 40, 20, 20);
+    if (pin== 1 )rect(120, 40, 20, 20); 
+    if (pin== 2 )rect(140, 40, 20, 20);
+    if (pin== 3 )rect(160, 40, 20, 20);
+    if (pin== 4 )rect(180, 40, 20, 20);
+    if (pin== 5 )rect(200, 40, 20, 20);
+    if (pin== 6 )rect(220, 40, 20, 20);
+    if (pin== 7 )rect(240, 40, 20, 20);
+    if (pin== 8 )rect(260, 40, 20, 20);
+    if (pin== 9 )rect(280, 40, 20, 20);
+    if (pin==10 )rect(300, 40, 20, 20);
+    if (pin==11 )rect(320, 40, 20, 20);
+    if (pin==12 )rect(340, 40, 20, 20);
+    if (pin==13 )rect(360, 40, 20, 20);
+    stroke(0);  
+    
+    fill(128);
+    text("Pin:", 30, 58);
+
+    fill(140);
+    text("0",104,76);
+    text("1",124, 38); 
+    text("2",144, 76);
+    text("3",164, 38);
+    text("4",184, 78);
+    text("5",204, 38); 
+    text("6",224, 78);
+    text("7",244, 38);
+    text("8",264, 78);
+    text("9",284, 38);
+    text("10",301, 78);
+    text("11",321, 38);
+    text("12",341, 78);
+    text("13",361, 38);
+      
+    if (varclicked==true && lastargu==1) {
+      px = varenterasnom.get(nvarselec); 
+      arguvar1=true; 
+      varclicked=false;
+    }
+
+      if (objeto.isNull("px") == false) px= ""+objeto.get("px");
+      if (objeto.isNull("pxv") == false) { 
+        px= ""+objeto.get("pxv"); 
+        arguvar1=true;
+      }
+
+    // muestra el nombre de la variable
+    fill(80);
+    if (objeto.isNull("nombre") == false) text(instru, 10, 20); 
+    else text(""+idiomaactual.get(str(lastid)), 10, 20);
+
+
+
+    ///* // botones  # y Var ARGUMENTO 1
+    fill(255);
+    if (posy== 100 && mouseX>293 && mouseX<325)fill(80);
+    rect(293, 100, 32, 20); // cuadro var
+
+
+
+    /// TEXTO DE BOTONES # y VAR
+    fill(0);
+    text("Vr", 297, 115);
+
+
+    text(idiomagui.getString("Variable")+":", 30, 115);
+    rect(168, 100, 100, 20);  // area de texto valor
+    if (posy== 100||argumentos== 1000001) {
+      fill(80);
+      rect(168, 100, 100, 20);
+      fill(0);
+      text(px+"|", 170, 117);
+    }
+    fill(255);
+    text(px, 170, 117); // muestra valor x
+    fill(0);
+
+
+
+    // botones Cancelar y Aplicar
+    noStroke();
+    fill(20);
+    rect(41, 220, 90, 20);
+    if (posy== 220 && mouseX>41 && mouseX<131) {
+      fill(100);
+      rect(41, 220, 90, 20);
+    }
+    fill(255);
+    text(idiomagui.getString("Cancelar"), 50, 235);
+
+
+    fill(20);
+    rect(170, 220, 90, 20);
+    if (posy== 220 && mouseX>170 && mouseX<260) {
+      fill(100);
+      rect(170, 220, 90, 20);
+    }
+    fill(255);
+    text(idiomagui.getString("Aplicar"), 180, 235);
+    stroke(0);
+  }  // fin entradadital
+  
+
+  //----------------
+  //  entraanalogica
+  //----------------
+
+  void entradaanalogica() {
+    x = mouseX-mouseX % 20;
+    background(200);
+
+    if (arduinoline==false) {
+      if (objeto.isNull("variable") == false) px= ""+objeto.get("variable"); 
+      else px="";
+      if (objeto.isNull("pin") == false) pin= objeto.getInt("pin"); 
+      else pin=0;
+      arduinoline=true;
+    }
+
+    if (posy==40) {
+      fill(128);
+      if (x==100)rect(100, 40, 20, 20); // pin 0
+      if (x==120)rect(120, 40, 20, 20); // pin 1
+      if (x==140)rect(140, 40, 20, 20); // pin 2
+      if (x==160)rect(160, 40, 20, 20); // pin 3
+      if (x==180)rect(180, 40, 20, 20); // pin 4
+      if (x==200)rect(200, 40, 20, 20); // pin 5
+    }
+    
+    // dibuja las casillas vacias de los pines
+    noFill();
+    stroke(255);
+    rect(100, 40, 20, 20); // pin 0
+    rect(120, 40, 20, 20); // pin 1
+    rect(140, 40, 20, 20); // pin 2
+    rect(160, 40, 20, 20); // pin 3
+    rect(180, 40, 20, 20); // pin 4
+    rect(200, 40, 20, 20); // pin 5
+
+    
+    //Resalta la casilla del pin activado
+    fill(255);
+    if (pin== 0 )rect(100, 40, 20, 20);
+    if (pin== 1 )rect(120, 40, 20, 20); 
+    if (pin== 2 )rect(140, 40, 20, 20);
+    if (pin== 3 )rect(160, 40, 20, 20);
+    if (pin== 4 )rect(180, 40, 20, 20);
+    if (pin== 5 )rect(200, 40, 20, 20);
+
+    stroke(0);  
+    
+    fill(128);
+    text("Pin:", 30, 58);
+
+    fill(140);
+    text("0",104,76);
+    text("1",124, 38); 
+    text("2",144, 76);
+    text("3",164, 38);
+    text("4",184, 78);
+    text("5",204, 38); 
+      
+    if (varclicked==true && lastargu==1) {
+      px = varenterasnom.get(nvarselec); 
+      arguvar1=true; 
+      varclicked=false;
+    }
+
+      if (objeto.isNull("px") == false) px= ""+objeto.get("px");
+      if (objeto.isNull("pxv") == false) { 
+        px= ""+objeto.get("pxv"); 
+        arguvar1=true;
+      }
+
+    
+    // muestra el nombre de la variable
+    fill(80);
+    if (objeto.isNull("nombre") == false) text(instru, 10, 20); 
+    else text(""+idiomaactual.get(str(lastid)), 10, 20);
+
+
+
+    ///* // botones  # y Var ARGUMENTO 1
+    fill(255);
+    if (posy== 100 && mouseX>293 && mouseX<325)fill(80);
+    rect(293, 100, 32, 20); // cuadro var
+    
+
+    /// TEXTO DE BOTONES # y VAR
+    fill(0);
+    text("Vr", 297, 115);
+
+
+    text(idiomagui.getString("Variable")+":", 30, 115);
+    rect(168, 100, 100, 20);  // area de texto valor
+    if (posy== 100||argumentos== 1000001) {
+      fill(80);
+      rect(168, 100, 100, 20);
+      fill(0);
+      text(px+"|", 170, 117);
+    }
+    fill(255);
+    text(px, 170, 117); // muestra valor x
+    fill(0);
+
+
+
+    // botones Cancelar y Aplicar
+    noStroke();
+    fill(20);
+    rect(41, 220, 90, 20);
+    if (posy== 220 && mouseX>41 && mouseX<131) {
+      fill(100);
+      rect(41, 220, 90, 20);
+    }
+    fill(255);
+    text(idiomagui.getString("Cancelar"), 50, 235);
+
+
+    fill(20);
+    rect(170, 220, 90, 20);
+    if (posy== 220 && mouseX>170 && mouseX<260) {
+      fill(100);
+      rect(170, 220, 90, 20);
+    }
+    fill(255);
+    text(idiomagui.getString("Aplicar"), 180, 235);
+    stroke(0);
+  }  // fin entraanalogica
+  
+
+  //----------------
+  //  servo
+  //----------------
+
+  void servo() {
+    x = mouseX-mouseX % 20;
+    background(200);
+
+    if (arduinoline==false) {
+      if (objeto.isNull("variable") == false) px= ""+objeto.get("variable"); 
+      else px="";
+      if (objeto.isNull("pin") == false) pin= objeto.getInt("pin"); 
+      else pin=0;
+      arduinoline=true;
+    }
+
+    if (posy==40) {
+      fill(128);
+      if (x==100)rect(100, 40, 20, 20);
+      if (x==120)rect(120, 40, 20, 20); 
+      if (x==140)rect(140, 40, 20, 20);
+      if (x==160)rect(160, 40, 20, 20);
+      if (x==180)rect(180, 40, 20, 20);
+      if (x==200)rect(200, 40, 20, 20); 
+      if (x==220)rect(220, 40, 20, 20);
+      if (x==240)rect(240, 40, 20, 20);
+      if (x==260)rect(260, 40, 20, 20);
+      if (x==280)rect(280, 40, 20, 20);
+      if (x==300)rect(300, 40, 20, 20);
+      if (x==320)rect(320, 40, 20, 20);
+      if (x==340)rect(340, 40, 20, 20);
+      if (x==360)rect(360, 40, 20, 20);
+    }
+    
+    // dibuja las casillas vacias de los pines
+    noFill();
+    stroke(255);
+    rect(100, 40, 20, 20);
+    rect(120, 40, 20, 20); 
+    rect(140, 40, 20, 20);
+    rect(160, 40, 20, 20);
+    rect(180, 40, 20, 20);
+    rect(200, 40, 20, 20); 
+    rect(220, 40, 20, 20);
+    rect(240, 40, 20, 20);
+    rect(260, 40, 20, 20);
+    rect(280, 40, 20, 20);
+    rect(300, 40, 20, 20);
+    rect(320, 40, 20, 20);
+    rect(340, 40, 20, 20);
+    rect(360, 40, 20, 20);
+    
+    //Resalta la casilla del pin activado
+    fill(255);
+    if (pin== 0 )rect(100, 40, 20, 20);
+    if (pin== 1 )rect(120, 40, 20, 20); 
+    if (pin== 2 )rect(140, 40, 20, 20);
+    if (pin== 3 )rect(160, 40, 20, 20);
+    if (pin== 4 )rect(180, 40, 20, 20);
+    if (pin== 5 )rect(200, 40, 20, 20);
+    if (pin== 6 )rect(220, 40, 20, 20);
+    if (pin== 7 )rect(240, 40, 20, 20);
+    if (pin== 8 )rect(260, 40, 20, 20);
+    if (pin== 9 )rect(280, 40, 20, 20);
+    if (pin==10 )rect(300, 40, 20, 20);
+    if (pin==11 )rect(320, 40, 20, 20);
+    if (pin==12 )rect(340, 40, 20, 20);
+    if (pin==13 )rect(360, 40, 20, 20);
+    stroke(0);  
+    
+    fill(128);
+    text("Pin:", 30, 58);
+
+    fill(140);
+    text("0",104,76);
+    text("1",124, 38); 
+    text("2",144, 76);
+    text("3",164, 38);
+    text("4",184, 78);
+    text("5",204, 38); 
+    text("6",224, 78);
+    text("7",244, 38);
+    text("8",264, 78);
+    text("9",284, 38);
+    text("10",301, 78);
+    text("11",321, 38);
+    text("12",341, 78);
+    text("13",361, 38);
+      
+    if (varclicked==true && lastargu==1) {
+      px = varenterasnom.get(nvarselec); 
+      arguvar1=true; 
+      varclicked=false;
+    }
+
+      if (objeto.isNull("px") == false) px= ""+objeto.get("px");
+      if (objeto.isNull("pxv") == false) { 
+        px= ""+objeto.get("pxv"); 
+        arguvar1=true;
+      }
+
+    // muestra el nombre de la variable
+    fill(80);
+    if (objeto.isNull("nombre") == false) text(instru, 10, 20); 
+    else text(""+idiomaactual.get(str(lastid)), 10, 20);
+
+
+
+    ///* // botones  # y Var ARGUMENTO 1
+    fill(255);
+    if (posy== 100 && mouseX>293 && mouseX<325)fill(80);
+    rect(293, 100, 32, 20); // cuadro var
+    fill(255);
+    if (posy== 100 && mouseX>272 && mouseX<287)fill(80);
+    rect(272, 100, 15, 20); // cuadro #
+
+
+    /// TEXTO DE BOTONES # y VAR
+    fill(0);
+    //text("Vr", 297, 115);
+    text("#   Vr", 275, 115);
+
+    fill(128);
+    text(idiomagui.getString("Angulo")+":", 30, 115);
+    rect(168, 100, 100, 20);  // area de texto valor
+    if (posy== 100||argumentos== 1000001) {
+      fill(80);
+      rect(168, 100, 100, 20);
+      fill(0);
+      text(px+"|", 170, 117);
+    }
+    fill(255);
+    text(px, 170, 117); // muestra valor x
+    fill(0);
+
+
+
+    // botones Cancelar y Aplicar
+    noStroke();
+    fill(20);
+    rect(41, 220, 90, 20);
+    if (posy== 220 && mouseX>41 && mouseX<131) {
+      fill(100);
+      rect(41, 220, 90, 20);
+    }
+    fill(255);
+    text(idiomagui.getString("Cancelar"), 50, 235);
+
+
+    fill(20);
+    rect(170, 220, 90, 20);
+    if (posy== 220 && mouseX>170 && mouseX<260) {
+      fill(100);
+      rect(170, 220, 90, 20);
+    }
+    fill(255);
+    text(idiomagui.getString("Aplicar"), 180, 235);
+    stroke(0);
+  }  // fin servo
+
   //--------
   //  NOTA
   //--------
 
   void nota() {
+    
+    
+    if (tocanotas==false) {
+      if (objeto.isNull("nota") == false) nota= objeto.getString("nota").charAt(0); 
+      else nota='F';
+      if (objeto.isNull("nota") == false) {octava= int(objeto.getString("nota").charAt(1))-48; }
+      else octava=4;
+      
+      tocanotas=true;
+    }
 
     if (mousePressed== true) {
       // boton cancelar
@@ -2067,6 +2889,9 @@ class PWindow3 extends PApplet {
         exit();
         surface.setVisible(false);
       }
+      
+
+      
     }
     background(200);
     fill(80);
@@ -2109,10 +2934,89 @@ class PWindow3 extends PApplet {
     fill(255);
     text("Website", 50, 155);
     
+    text("Arduino "+idiomagui.getString("puerto")+": "+Arduino.list()[port]+"    ( "+port+" / "+Arduino.list()[0].length()+" )", 50, 185);
+    fill(80);
+    text("Arduino "+idiomagui.getString("puerto")+":", 50, 185);
+
+    fill(0);
+    if(posy==200 && mouseX>50 && mouseX<70)fill(80);
+    rect(50,200, 20,20);
+    fill(255);
+    text("-",57,215);
+
+    fill(0);
+    if(posy==200 && mouseX>90 && mouseX<110)fill(100);
+    rect(90,200, 20,20);
+    fill(255);
+    text("+",95,217);
     
   }
   
+  //----------
+  //  FORMULA 
+  //-----------
 
+  void formula() {
+
+
+    if (mousePressed== true) {
+      // boton cancelar
+      if (posy== 80 && mouseX>41 && mouseX<131) {
+        //agregarvar = false;
+        exit();
+        surface.setVisible(false);
+      }
+      // boton aplicar
+      if (posy== 80 && mouseX>170 && mouseX<260) {
+        JSONObject renuevaobjeto = new JSONObject();
+        String linea ="";
+        linea = instru;
+        if (objeto.isNull("si") == false)renuevaobjeto.setBoolean("si", true);
+        if (objeto.isNull("sino") == false)renuevaobjeto.setBoolean("sino", true);
+        if (objeto.isNull("encapsulado") == false)renuevaobjeto.setBoolean("encapsulado", true);
+        if(lastid==66)renuevaobjeto.setString("instruccion", "formula");
+        if(lastid==40)renuevaobjeto.setString("instruccion", "codigonativo");
+        
+        if(lastid==66)renuevaobjeto.setString("formula", instru);
+        if(lastid==40)renuevaobjeto.setString("codigo", instru);
+        renuevaobjeto.setInt("id", lastid);
+        renuevaobjeto.setString("pde", linea);
+        if (codetab==0) cargacodigo.setJSONObject(lineaclik, renuevaobjeto);         
+        if (codetab==1) cargamouse.setJSONObject(lineaclik, renuevaobjeto);         
+        if (codetab==2) cargateclado.setJSONObject(lineaclik, renuevaobjeto);
+        exit();
+        surface.setVisible(false);
+      }
+    }
+    background(200);
+    fill(80);
+    if(lastid==66)text(idiomagui.getString("fórmula"), 10, 20); //else text(idiomagui.getString("Variable"), 10, 20);
+    if(lastid==40)text(idiomagui.getString("código")+" "+idiomagui.getString("nativo"), 10, 20); //else text(idiomagui.getString("Variable"), 10, 20);
+    rect(40, 40, width, 20);  // area de texto valor
+    fill(255);
+    text(instru+"|", 42, 55);
+
+    // botones Cancelar y Aplicar
+    noStroke();
+    fill(20);
+    rect(41, 80, 90, 20);
+    if (posy== 80 && mouseX>41 && mouseX<131) {
+      fill(100);
+      rect(41, 80, 90, 20);
+    }
+    fill(255);
+    text(idiomagui.getString("Cancelar"), 50, 95);
+
+    fill(20);
+    rect(170, 80, 90, 20);
+    if (posy== 80 && mouseX>170 && mouseX<260) {
+      fill(100);
+      rect(170, 80, 90, 20);
+    }
+    fill(255);
+    text(idiomagui.getString("Aplicar"), 180, 95);
+    stroke(0);
+  }
 
   //----------
   //  COMENT 
@@ -3021,6 +3925,8 @@ class PWindow3 extends PApplet {
     condicion=false;
     texto=false;
     aleatorio=false;
+    arduinoline=false;
+    tocanotas=false;
     opening=false;
     dispose();
     wininstru = null;

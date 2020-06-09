@@ -1,4 +1,4 @@
-// META_PROCESSING Version Alpha 1.0
+// META_PROCESSING Version Alpha 1.1
 // (ɔ) 2020  Jose David Cuartas, GPL v.3
 // Hiteclab, http://hiteclab.libertadores.edu.co/
 // Fundación Universitaria Los Libertadores, Colombia
@@ -6,8 +6,10 @@
 // Processing 3.4 GNU GPL Version 3 The Processing Foundation
 
 // PENDIENTE:
-// botones subir y bajar lineas de código
 // agregar CRL+Z o desacer borrar línea
+// Permitia al usuario personalizar colores interfaz
+
+import processing.serial.*;
 
 
 PWindow3 wininstru;
@@ -45,6 +47,8 @@ boolean imagen=false; // bandera funcion imagen en Ventanas
 boolean texto=false; // bandera funcion texto en Ventanas
 boolean condicion=false; // bandera funcion condicion en Ventanas
 boolean aleatorio=false; // bandera funcion aleatorio en Ventanas
+boolean arduinoline=false; // bandera funcion arduino en Ventanas
+boolean tocanotas=false; // bandera funcion tocanota en Ventanas
 boolean positam=false; // bandera funcion positam en Ventanas
 boolean seleidio=false; // bandera funcion seleccion de idioma
 String codefolder, sketchfolder;
@@ -76,13 +80,14 @@ boolean existeproyecto=false; // bandera de existencia de proyecto
 boolean config=false; // bandera para abrir configuración
 boolean fullscreen=false;
 String[] newver = new String[1];
+int y, posy;
+boolean libminim = false, libvideo = false, libarduino =false;
+color fondo =  #000000, fondobarrasup = #323232, fondoresalta= #141414, fondotabsresalta= #323232, fondotabs = #000000, fondobarrainf = #505050; 
+int port=0;
+int icodigo=0, imouse=0, iteclado=0; // numero de linea desde la cual se muestra el código.
+int mouseid=0;
 
 
-
-  int y, posy;
-  boolean ctrlPressed;
-  boolean libminim = false, libvideo = false;
-  color fondo =  #000000, fondobarrasup = #323232, fondoresalta= #141414, fondotabsresalta= #323232, fondotabs = #000000, fondobarrainf = #505050; 
   /*
 Grayscale  =   RGB
    80         = FF505050
@@ -106,9 +111,11 @@ Grayscale  =   RGB
     
     // abre el splash
     wininstru = new PWindow3();
+    
   }
 
   void draw() {
+    
     // muesta la ventana de código al cerrar el splash 
     if (onetime==true && codewin==true) {
       surface.setVisible(true); 
@@ -127,7 +134,9 @@ Grayscale  =   RGB
     // resalta línea en la que se hizo click
     fill(fondoresalta); // 20
     noStroke();
-    rect(0, 22+20*(lineaclik+1), width, 20);
+    if (codetab==0)rect(0, 22+20*((lineaclik+1)-icodigo), width, 20);
+    if (codetab==1)rect(0, 22+20*((lineaclik+1)-imouse), width, 20);
+    if (codetab==2)rect(0, 22+20*((lineaclik+1)-iteclado), width, 20);
     stroke(128);
 
     // se calcula la linea que esta señalando el raton
@@ -136,6 +145,168 @@ Grayscale  =   RGB
     posy= mouseY-mouseY % 20;
     
     y= ((posy-40)/20)+1;
+
+
+
+        
+        
+
+    
+    
+
+    if (y>0 && y <=tlineas) {
+
+      if(y<35)linearaton=y; 
+
+      JSONObject objeto;
+      objeto = new JSONObject();
+
+      // aquí se carga la instruccion a la que apunta el raton y se carga el id de dicha instrucción
+      if (codetab==0) objeto = cargacodigo.getJSONObject(icodigo+(linearaton-1));
+      if (codetab==1) objeto = cargamouse.getJSONObject(imouse+(linearaton-1));
+      if (codetab==2) objeto = cargateclado.getJSONObject(iteclado+(linearaton-1));
+      int id = objeto.getInt("id");
+      mouseid = id;
+      fill(50);
+
+      // se calcula el tamaño en pixels de la linea
+      leelinea(linearaton-1);
+      widthline = int(textWidth(""+line));
+
+      // resalta linea que apunta el mouse solo hasta el final de la línea
+      rect(0, 22+20*y, widthline+40, 20);
+
+      // muestra boton agregar línea
+      if (mouseX>widthline+50 && mouseX<widthline+70) {
+        noStroke();
+
+        if (id==105 || objeto.isNull("si") == false || objeto.isNull("sino") == false) {
+          fill(0, 0, 255); 
+          quad(widthline+50, (33+20*y), widthline+60, (33+20*y)+10, widthline+70, (33+20*y), widthline+60, (33+20*y)-10);
+          fill(255);
+          if (id==105 || objeto.isNull("si") == false ) text(idiomagui.getString("Agregar")+" "+idiomagui.getString("Si"),15, height-22);
+          else if (objeto.isNull("sino") == false) text(idiomagui.getString("Agregar")+" "+idiomagui.getString("Sino"),15, height-22);
+        } else {
+          fill(#1BF50C);
+          ellipse(widthline+60, 33+20*y, 20, 20);
+          fill(255);
+          text(idiomagui.getString("Agregar"),15, height-22);
+        }
+
+        fill(0);
+        text("+", widthline+53, 37+20*y);
+        stroke(128);
+      }
+
+      // muestra boton agregar sino dede linea si
+      if (mouseX>widthline+140 && mouseX<widthline+160) {
+        if (objeto.isNull("si") == false ) { 
+          fill(#FFEC12); 
+          quad(widthline+140, (33+20*y), widthline+150, (33+20*y)+10, widthline+160, (33+20*y), widthline+150, (33+20*y)-10);
+        }
+        fill(255);
+        if( objetoml.isNull("si") == false || objetoml.isNull("sino") == false){
+          text(idiomagui.getString("Agregar")+" "+idiomagui.getString("Sino"),15, height-22);  
+          fill(0);
+          text("+", widthline+143, 37+20*y);
+          stroke(128);
+        }
+      }
+
+
+
+      // muestra boton eliminar línea
+      if (mouseX>widthline+80 && mouseX<widthline+100) {
+
+        fill(255, 0, 0);
+        line(40, 33+20*y, widthline+85, 33+20*y);
+        noStroke();
+        ellipse(widthline+90, 33+20*y, 20, 20);
+        fill(0);
+        text("-", widthline+85, 37+20*y);
+        stroke(128);
+        fill(255);
+        text(idiomagui.getString("Eliminar"),15, height-22);
+      }   
+
+      // muesta boton agregar línea fuera del if
+      if (mouseX>widthline+110 && mouseX<widthline+130) {
+        if (objeto.isNull("si") == false || objeto.isNull("sino") == false) {
+          fill(#1BF50C);
+          ellipse(widthline+120, 33+20*y, 20, 20);
+          fill(0);
+          text("+", widthline+113, 37+20*y);
+          fill(255);
+          text(idiomagui.getString("Agregar"),15, height-22);
+        }
+      }
+
+
+    }
+
+    // Resalta linea en ejecucion al presionar boton parar
+    if (lineaanterior!=0) { 
+      fill(resalta);
+      rect(40, 22+(20*lineaanterior), width, 20);
+    }
+    numera();
+
+    if (codetab==0) {
+      tlineas = cargacodigo.size(); 
+      for (int i = icodigo; i< tlineas; i++) {
+        objetoml = cargacodigo.getJSONObject(i);
+
+        muestralinea(i);
+      }
+      
+    }
+
+    if (codetab==1) {
+      tlineasmouse = cargamouse.size();
+      tlineas = tlineasmouse;
+      for (int i=imouse; i< tlineasmouse; i++) {
+        objetoml = cargamouse.getJSONObject(i);
+
+        muestralinea(i);
+      }
+    }
+
+    if (codetab==2) {
+      tlineasteclado = cargateclado.size(); 
+      tlineas = tlineasteclado;
+      for (int i=iteclado; i< tlineasteclado; i++) {
+        objetoml = cargateclado.getJSONObject(i);
+
+        muestralinea(i);
+      }
+    }
+
+    // botones subir y bajar código
+    pushStyle();
+    strokeJoin(ROUND);
+    //noFill();
+    stroke(80);
+    strokeWeight(2);
+    fill(#323232);
+    if(mouseX>width-21 && mouseY<60 && mouseY>40)fill(120);
+    rect(width-21, 40, 20, 20, 7); // boton arriba
+    fill(255);
+    text("^",width-15,60);
+    strokeWeight(1);
+    
+    
+    stroke(80);
+    strokeWeight(2);
+    fill(#323232);
+    if(mouseX>width-21 && mouseY<height-45 && mouseY>height-65)fill(120);
+    rect(width-21,height-65, 20, 20, 7); // boton arriba
+    fill(255);
+    textSize(14);
+    text("v",width-15,height-50);
+    strokeWeight(1);
+    
+    popStyle();
+    // fin botones subir y bajar código
 
 
     // barra inferior
@@ -156,9 +327,8 @@ Grayscale  =   RGB
     rect(0, height-45, width, height ); // 30
     // fin barra inferior
     
-        
-        
-    // barra superior    
+    
+        // barra superior    
     pushStyle();
 
     fill(fondobarrasup); // 0
@@ -288,133 +458,11 @@ Grayscale  =   RGB
   // fin barra superior
     
     
-
-    if (y>0 && y <=tlineas) {
-
-      linearaton=y; 
-
-      JSONObject objeto;
-      objeto = new JSONObject();
-
-      // aquí se carga la instruccion a la que apunta el raton y se carga el id de dicha instrucción
-      if (codetab==0) objeto = cargacodigo.getJSONObject(linearaton-1);
-      if (codetab==1) objeto = cargamouse.getJSONObject(linearaton-1);
-      if (codetab==2) objeto = cargateclado.getJSONObject(linearaton-1);
-      int id = objeto.getInt("id");
-      fill(50);
-
-      // se calcula el tamaño en pixels de la linea
-      leelinea(linearaton-1);
-      widthline = int(textWidth(""+line));
-
-      // resalta linea que apunta el mouse solo hasta el final de la línea
-      rect(0, 22+20*y, widthline+40, 20);
-
-      // muestra boton agregar línea
-      if (mouseX>widthline+50 && mouseX<widthline+70) {
-        noStroke();
-
-        if (id==105 || objeto.isNull("si") == false || objeto.isNull("sino") == false) {
-          fill(0, 0, 255); 
-          quad(widthline+50, (33+20*y), widthline+60, (33+20*y)+10, widthline+70, (33+20*y), widthline+60, (33+20*y)-10);
-          fill(255);
-          if (id==105 || objeto.isNull("si") == false ) text(idiomagui.getString("Agregar")+" "+idiomagui.getString("Si"),15, height-22);
-          else if (objeto.isNull("sino") == false) text(idiomagui.getString("Agregar")+" "+idiomagui.getString("Sino"),15, height-22);
-        } else {
-          fill(#1BF50C);
-          ellipse(widthline+60, 33+20*y, 20, 20);
-          fill(255);
-          text(idiomagui.getString("Agregar"),15, height-22);
-        }
-
-        fill(0);
-        text("+", widthline+53, 37+20*y);
-        stroke(128);
-      }
-
-      // muestra boton agregar sino dede linea si
-      if (mouseX>widthline+140 && mouseX<widthline+160) {
-        if (objeto.isNull("si") == false ) { 
-          fill(#FFEC12); 
-          quad(widthline+140, (33+20*y), widthline+150, (33+20*y)+10, widthline+160, (33+20*y), widthline+150, (33+20*y)-10);
-        }
-        fill(255);
-        if( objetoml.isNull("si") == false || objetoml.isNull("sino") == false){
-          text(idiomagui.getString("Agregar")+" "+idiomagui.getString("Sino"),15, height-22);  
-          fill(0);
-          text("+", widthline+143, 37+20*y);
-          stroke(128);
-        }
-      }
-
-
-
-      // muestra boton eliminar línea
-      if (mouseX>widthline+80 && mouseX<widthline+100) {
-
-        fill(255, 0, 0);
-        line(40, 33+20*y, widthline+85, 33+20*y);
-        noStroke();
-        ellipse(widthline+90, 33+20*y, 20, 20);
-        fill(0);
-        text("-", widthline+85, 37+20*y);
-        stroke(128);
-        fill(255);
-        text(idiomagui.getString("Eliminar"),15, height-22);
-      }   
-
-      // muesta boton agregar línea fuera del if
-      if (mouseX>widthline+110 && mouseX<widthline+130) {
-        if (objeto.isNull("si") == false || objeto.isNull("sino") == false) {
-          fill(#1BF50C);
-          ellipse(widthline+120, 33+20*y, 20, 20);
-          fill(0);
-          text("+", widthline+113, 37+20*y);
-          fill(255);
-          text(idiomagui.getString("Agregar"),15, height-22);
-        }
-      }
-
+    
       // Muestra prototipo de la instrucción en la barra inferior
       fill(255);
-      if (mouseX<widthline+40)text(prototipoinstru.getString(str(id)),15, height-22);
-    }
+      if (posy>20 && mouseX<widthline+40)text(prototipoinstru.getString(str(mouseid)),15, height-22);
 
-    // Resalta linea en ejecucion al presionar boton parar
-    if (lineaanterior!=0) { 
-      fill(resalta);
-      rect(40, 22+(20*lineaanterior), width, 20);
-    }
-    numera();
-
-    if (codetab==0) {
-      tlineas = cargacodigo.size(); 
-      for (int i=0; i< tlineas; i++) {
-        objetoml = cargacodigo.getJSONObject(i);
-
-        muestralinea(i);
-      }
-    }
-
-    if (codetab==1) {
-      tlineasmouse = cargamouse.size();
-      tlineas = tlineasmouse;
-      for (int i=0; i< tlineasmouse; i++) {
-        objetoml = cargamouse.getJSONObject(i);
-
-        muestralinea(i);
-      }
-    }
-
-    if (codetab==2) {
-      tlineasteclado = cargateclado.size(); 
-      tlineas = tlineasteclado;
-      for (int i=0; i< tlineasteclado; i++) {
-        objetoml = cargateclado.getJSONObject(i);
-
-        muestralinea(i);
-      }
-    }
 
   }
   void keyPressed() {
@@ -485,6 +533,7 @@ Grayscale  =   RGB
       println("Ejecuta");
       fill(0,255,0);
       triangle(20, 10, 20, 30, 40, 20); // boton ejecutar
+      guardameta();
       guardapde(1);
       
       
@@ -562,6 +611,10 @@ Grayscale  =   RGB
       inicio=true;
       runwindow=false;
       codetab=0;
+      port=0;
+      icodigo=0;
+      imouse=0;
+      iteclado=0;
        
       line=""+idiomaactual.get(str(-1));
       idlee=-1;
@@ -591,11 +644,14 @@ Grayscale  =   RGB
 
     // Boton guardar
     if (mouseX>450 && mouseX<475 && mouseY>10 && mouseY<30) {
+      println("Guarda");
+      guardameta();
       saveJSONArray(cargacodigo, sketchfolder+proyectonombre+"/"+proyectonombre+".json");
       saveJSONArray(cargamouse, sketchfolder+proyectonombre+"/raton.json");
       saveJSONArray(cargateclado, sketchfolder+proyectonombre+"/teclado.json");
       
       configuration.getJSONObject(1).setInt("cuadros",velocidad);
+      configuration.getJSONObject(1).setInt("pueto",port);
       saveJSONArray(cargavars, sketchfolder+proyectonombre+"/variables.json");
       saveJSONArray(configuration, sketchfolder+proyectonombre+"/configuracion.json");
       byte[] data = {  }; saveBytes(sketchfolder+"/"+proyectonombre+"/data/data.txt", data); // crea carpeta data en el proyecto
@@ -605,6 +661,7 @@ Grayscale  =   RGB
     // boton exportar
     if (mouseX>500 && mouseX<525 && mouseY>10 && mouseY<30) {
       println("Exporta");
+      guardameta();
       guardapde(1);
       
       String OS = System.getProperty("os.name").toLowerCase(); 
@@ -909,20 +966,92 @@ Grayscale  =   RGB
 
 
     // Abre la ventana de la instrucción en la que se hizo click con el boton izquierdo
-    if (y < tlineas+1 && ventana==false && mouseButton==LEFT && mouseY>40 && mouseY< height-56 && mouseX < widthline+40) {
+    if (y < tlineas+1 && ventana==false && mouseButton==LEFT && mouseX < widthline+40 && mouseY>40 && mouseY< height-70 ) {
       ventana=true;
-      lineaclik = linearaton-1;
+      if(codetab==0) lineaclik = icodigo+linearaton-1;
+      if(codetab==1) lineaclik = imouse+linearaton-1;
+      if(codetab==2) lineaclik = iteclado+linearaton-1;
       ventatamx = 550;
       wininstru = new PWindow3();
     }
 
+// Botón Flecha Arriba reduce i (volver al inicio del códogio - primera línea)
+
+    if(mouseX>width-21 && mouseY<60 && mouseY>40){
+      //linearaton=1;
+        if(codetab==0 && icodigo > 0) icodigo--; // codigo
+        if(codetab==1 && imouse > 0) imouse--;  // mouse
+        if(codetab==2 && iteclado > 0) iteclado--; // teclado
+    }
+    
+// Botón Flecha Abajo: aumenta i (ir al final del códogo - última línea)
+
+    if(mouseX>width-21 && mouseY<height-45 && mouseY>height-65){ 
+      linearaton=1;
+        if(codetab==0){ // codigo
+            if( icodigo < tlineas-34 && tlineas>35)icodigo++; 
+            if(icodigo < tlineas && tlineas<35) icodigo++; 
+        }
+        if(codetab==1){ // mouse
+            if( imouse < tlineasmouse-34 && tlineasmouse>35) imouse++;  
+            if( imouse < tlineasmouse && tlineasmouse<35) imouse++;  
+        }
+        if(codetab==2){ // teclado
+            if( iteclado < tlineasteclado-34 && tlineasteclado>35)iteclado++; 
+            if ( iteclado < tlineasteclado && tlineasteclado<35) iteclado++; 
+        }
+    }
+
   } // fin mousePressed
+
+void mouseWheel(MouseEvent event) {
+  //float e = event.getCount();
+
+// Botón Flecha Arriba reduce i (volver al inicio del códogio - primera línea)
+
+    if(event.getCount()<0){
+      //linearaton=1;
+        if(codetab==0 && icodigo > 0) icodigo--; // codigo
+        if(codetab==1 && imouse > 0) imouse--;  // mouse
+        if(codetab==2 && iteclado > 0) iteclado--; // teclado
+    }
+    
+// Botón Flecha Abajo: aumenta i (ir al final del códogo - última línea)
+
+    if(event.getCount()>0){ 
+      linearaton=1;
+        if(codetab==0){ // codigo
+            if( icodigo < tlineas-34 && tlineas>35)icodigo++; 
+            if(icodigo < tlineas && tlineas<35) icodigo++; 
+        }
+        if(codetab==1){ // mouse
+            if( imouse < tlineasmouse-34 && tlineasmouse>35) imouse++;  
+            if( imouse < tlineasmouse && tlineasmouse<35) imouse++;  
+        }
+        if(codetab==2){ // teclado
+            if( iteclado < tlineasteclado-34 && tlineasteclado>35)iteclado++; 
+            if ( iteclado < tlineasteclado && tlineasteclado<35) iteclado++; 
+        }
+    }
+
+
+}
+
+
+
+///////////////////////////
+///     NUMERA
+//////////////////////////
 
   void numera() {
     fill(180);
-    for (int i=0; i<tlineas; i++ ) text(i+1, 5, 60+(20*i));
+    if(codetab==0) for (int i=icodigo; i<tlineas; i++ ) text(i+1, 5, 60+((20*i)-(20*icodigo))); // numera pestaña código
+    if(codetab==1) for (int i=imouse; i<tlineasmouse; i++ ) text(i+1, 5, 60+((20*i)-(20*imouse))); // numera pestaña mouse
+    if(codetab==2) for (int i=iteclado; i<tlineasteclado; i++ ) text(i+1, 5, 60+((20*i)-(20*iteclado))); // numera pestaña teclado
+    
   }
-
+  
+//////////////////////////////////
 
 
   //---------------------
@@ -956,7 +1085,11 @@ Grayscale  =   RGB
       }
     } // id 102
 
-    text(line, 40, 60+(20*i));
+    if(codetab==0)text(line, 40, 60+((20*i)-(20*icodigo) ));
+    if(codetab==1)text(line, 40, 60+((20*i)-(20*imouse) ));
+    if(codetab==2)text(line, 40, 60+((20*i)-(20*iteclado) ));
+    
+    
     fill(#F5AB0A);
     if (objetoml.isNull("instruccion") == false) {
 
@@ -993,6 +1126,47 @@ Grayscale  =   RGB
     dispose();
   }
   
+   //////////////////
+  ///  GUARDA META
+  ////////////////// 
+  
+void guardameta(){
+      println("Guarda código Meta");
+      String[] metateclado, metaraton, metaprincipal;
+
+      metateclado= new String[1];
+      metaraton= new String[1];
+      metaprincipal= new String[1];
+      metateclado[0] ="";
+      metaraton[0] ="";
+      metaprincipal[0] ="";
+      
+      
+      codetab=2;
+      for (int i=1; i-1<tlineasteclado; i++) {
+        leelinea(i-1);
+        if (cargateclado.getJSONObject(i-1).isNull("sino") == false)metateclado[0] = metateclado[0]+idiomagui.getString("Sino");
+        metateclado[0] = metateclado[0]+line+"\n";
+      }
+      saveStrings(sketchfolder+proyectonombre+"/meta/teclado.meta", metateclado);
+      
+      codetab=1;  
+      for (int i=1; i-1<tlineasmouse; i++) {
+        leelinea(i-1);
+        if (cargamouse.getJSONObject(i-1).isNull("sino") == false)metaraton[0] = metaraton[0]+idiomagui.getString("Sino");
+        metaraton[0] = metaraton[0]+line+"\n";
+      }
+      saveStrings(sketchfolder+proyectonombre+"/meta/raton.meta", metaraton);
+      
+      codetab=0;
+      for (int i=1; i-1<tlineas; i++) {
+        leelinea(i-1);
+        if (cargacodigo.getJSONObject(i-1).isNull("sino") == false)metaprincipal[0] = metaprincipal[0]+idiomagui.getString("Sino");
+        metaprincipal[0] = metaprincipal[0]+line+"\n";
+      }
+      saveStrings(sketchfolder+proyectonombre+"/meta/principal.meta", metaprincipal);
+}  
+  
   //////////////////
   ///  GUARDA PDE
   //////////////////
@@ -1007,9 +1181,10 @@ Grayscale  =   RGB
       lineaclik=0;
       libminim = false; 
       libvideo = false;
+      libarduino = false;
 
       String[] texto, textof, lib, setup;
-
+      
       // EXPORTAR KEYPRESSED()
       texto = new String[1];
       textof = new String[1]; 
@@ -1040,7 +1215,11 @@ Grayscale  =   RGB
           }
           if (cargateclado.getJSONObject(i-1).getInt("id") == 110) { // tocanota
             libminim=true;
-          }
+          }      
+          if (cargateclado.getJSONObject(i-1).getInt("id") == 10) { // salidadigital
+            libarduino=true;
+          }  
+          
         }// fin if
       } // fin for      
       
@@ -1085,6 +1264,9 @@ Grayscale  =   RGB
           if (cargamouse.getJSONObject(i-1).getInt("id") == 110) { // tocanota
             libminim=true;
           }
+          if (cargamouse.getJSONObject(i-1).getInt("id") == 10) { // salidadigital
+            libarduino=true;
+          }          
         }// fin if
       } // fin for      
       textof [0] = "void mousePressed(){\n click=mouseButton;\n";
@@ -1138,6 +1320,9 @@ Grayscale  =   RGB
           if (cargacodigo.getJSONObject(i-1).getInt("id") == 110) { // tocanota
             libminim=true;
           }
+          if (cargacodigo.getJSONObject(i-1).getInt("id") == 10) { // salidadigital
+            libarduino=true;
+          }          
         }// fin if
       } // fin for
 
@@ -1146,6 +1331,9 @@ Grayscale  =   RGB
       }
       if (libvideo==true) {
         lib[0]=lib[0]+"\nimport processing.video.*;\nboolean inivideo=false;\n";
+      }
+      if (libarduino==true) {
+        lib[0]=lib[0]+"\nimport processing.serial.*;\nimport cc.arduino.*;\n\n Arduino arduino;\n";
       }
       textof = expand(texto, 1);
       textof [0] = lib[0];
@@ -1175,8 +1363,10 @@ Grayscale  =   RGB
       //textof [0] = textof [0]+"\n\n void settings() { \nsize(displayWidth, displayHeight); \n}\n\n void setup(){";
 
       if(fullscreen==false) textof [0] = textof [0]+"\nsurface.setResizable(true);";
-      textof [0] = textof [0]+" \nframeRate("+velocidad+");";
-
+      textof [0] = textof [0]+" \nframeRate("+velocidad+");\n";
+      if (libarduino==true) {
+        textof [0]=textof [0]+"try { arduino = new Arduino(this, Arduino.list()["+port+"], 57600); } catch (Exception e) { exit(); }\n"; // se inicia la lectura del puerto 0 para controlar el arduino
+      }
 
       textof [0] = textof [0]+setup[0];
 
@@ -1257,6 +1447,13 @@ void folderSelected(File selection) {
     cargacodigo = loadJSONArray(sketchfolder+proyectonombre+"/"+proyectonombre+".json");
     cargamouse = loadJSONArray(sketchfolder+proyectonombre+"/"+"/raton.json");
     cargateclado = loadJSONArray(sketchfolder+proyectonombre+"/teclado.json");
+    tlineas = cargacodigo.size();
+    tlineasmouse = cargamouse.size();
+    tlineasteclado = cargateclado.size(); 
+    
+    icodigo=0;
+    imouse=0;
+    iteclado=0;
     
     // esta parte actualiza el archivo lastopen.txt con el proyecto abierto
     String[] last = new String[1];
@@ -1302,10 +1499,34 @@ void leelinea(int i) {
   if (id==0) {
     line = "//"+objeto.get("comentario");
   } else 
+  // muestra formula
+  if (id==66) {
+    line = ""+objeto.get("formula");
+  } else 
+  // muestra formula
+  if (id==40) {
+    line = ""+objeto.get("codigo");
+  } else 
   // muestra código encapsulado
   if (id==99) {
     line=""+idiomaactual.get(str(id))+objeto.get("capsula");
   } else 
+  // muestra salidadigital
+  if (id==10) {
+    line=""+idiomaactual.get(str(id))+" ( "+objeto.get("pin")+", "+objeto.get("valor")+" ) ";
+  } else
+  // muestra entradadigital
+  if (id==11) {
+    line=""+idiomaactual.get(str(id))+" ( "+objeto.get("pin")+", "+objeto.get("variable")+" ) ";
+  } else
+  // muestra entradaanalogica
+  if (id==12) {
+    line=""+idiomaactual.get(str(id))+" ( "+objeto.get("pin")+", "+objeto.get("variable")+" ) ";
+  } else
+  // muestra entradaanalogica
+  if (id==13) {
+    line=""+idiomaactual.get(str(id))+" ( "+objeto.get("pin")+", "+objeto.get("variable")+" ) ";
+  } else
   // muestra tocanota
   if (id==110) {
     line=""+idiomaactual.get(str(id))+" ( "+objeto.get("nota")+" ) ";
@@ -1373,6 +1594,15 @@ void leelinea(int i) {
               line=""+idiomaactual.get(str(id))+" ( "+objeto.get("variable")+" , "+objeto.get("valor")+" )";
             } else
             
+            // muestra multiplicar
+            if (id==64) {
+              line=""+idiomaactual.get(str(id))+" ( "+objeto.get("variable")+" , "+objeto.get("valor")+" )";
+            } else
+            
+            // muestra dividir
+            if (id==65) {
+              line=""+idiomaactual.get(str(id))+" ( "+objeto.get("variable")+" , "+objeto.get("valor")+" )";
+            } else            
             
             // muestra aleatorio
             if (id==97) {
