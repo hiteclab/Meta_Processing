@@ -86,7 +86,8 @@ color fondo =  #000000, fondobarrasup = #323232, fondoresalta= #141414, fondotab
 int port=0;
 int icodigo=0, imouse=0, iteclado=0; // numero de linea desde la cual se muestra el código.
 int mouseid=0;
-
+int maximolineas=0; // Guarda el numero máximo de lineas que se puede mostrar en el tamaño actual de la ventana. Si la ventana es de y=800 entonces para este valor de y maximolineas es 34
+int lineaactual=0;
 
   /*
 Grayscale  =   RGB
@@ -97,13 +98,14 @@ Grayscale  =   RGB
    20         = FF141414
    */
 
-  void settings() {
-       size(700, 800, JAVA2D);
-
-  }
 
   void setup() {
-    surface.setResizable(true); 
+    
+    surface.setResizable(true);
+    surface.setSize(700,800);
+    surface.setTitle(" ");
+    //surface.setLocation(100, 10);
+    
     if(mainwindow==false) surface.setVisible(false); // oculta la ventana de ejecución de código para mostrar al abri Metaprocessing solo el splah
 
     textFont(createFont("Arial Unicode MS",17));
@@ -115,7 +117,19 @@ Grayscale  =   RGB
   }
 
   void draw() {
+   maximolineas=(height-111)/20;
+   
+   if(mouseY>40){
+   posy= mouseY-mouseY % 20;
     
+   y= ((posy-40)/20)+1;
+   
+   
+   if (codetab==0 && icodigo+(y-1)<tlineas && mouseY<height-71)lineaactual=icodigo+(y-1);
+   if (codetab==1 && imouse+(y-1)<tlineasmouse && mouseY<height-71)lineaactual=imouse+(y-1);
+   if (codetab==2 && iteclado+(y-1)<tlineasteclado && mouseY<height-71)lineaactual=iteclado+(y-1);
+   }
+   
     // muesta la ventana de código al cerrar el splash 
     if (onetime==true && codewin==true) {
       surface.setVisible(true); 
@@ -134,115 +148,43 @@ Grayscale  =   RGB
     // resalta línea en la que se hizo click
     fill(fondoresalta); // 20
     noStroke();
+    /*
     if (codetab==0)rect(0, 22+20*((lineaclik+1)-icodigo), width, 20);
     if (codetab==1)rect(0, 22+20*((lineaclik+1)-imouse), width, 20);
     if (codetab==2)rect(0, 22+20*((lineaclik+1)-iteclado), width, 20);
+    */
+    
+    if (codetab==0)rect(0, 22+20*((lineaclik+1)-icodigo), width, 20);
+    if (codetab==1)rect(0, 22+20*((lineaclik+1)-imouse), width, 20);
+    if (codetab==2)rect(0, 22+20*((lineaclik+1)-iteclado), width, 20);
+    
     stroke(128);
 
     // se calcula la linea que esta señalando el raton
     textSize(18);
 
-    posy= mouseY-mouseY % 20;
-    
-    y= ((posy-40)/20)+1;
 
 
 
         
-        
-
-    
-    
-
-    if (y>0 && y <=tlineas) {
-
-      if(y<35)linearaton=y; 
-
-      JSONObject objeto;
-      objeto = new JSONObject();
-
-      // aquí se carga la instruccion a la que apunta el raton y se carga el id de dicha instrucción
-      if (codetab==0) objeto = cargacodigo.getJSONObject(icodigo+(linearaton-1));
-      if (codetab==1) objeto = cargamouse.getJSONObject(imouse+(linearaton-1));
-      if (codetab==2) objeto = cargateclado.getJSONObject(iteclado+(linearaton-1));
-      int id = objeto.getInt("id");
-      mouseid = id;
-      fill(50);
+    if (y>0 && tlineas >= icodigo+y ) {
 
       // se calcula el tamaño en pixels de la linea
-      leelinea(linearaton-1);
+      if (codetab==0)leelinea(lineaactual);
+      if (codetab==1)leelinea(lineaactual);
+      if (codetab==2)leelinea(lineaactual);
       widthline = int(textWidth(""+line));
 
-      // resalta linea que apunta el mouse solo hasta el final de la línea
-      rect(0, 22+20*y, widthline+40, 20);
-
-      // muestra boton agregar línea
-      if (mouseX>widthline+50 && mouseX<widthline+70) {
-        noStroke();
-
-        if (id==105 || objeto.isNull("si") == false || objeto.isNull("sino") == false) {
-          fill(0, 0, 255); 
-          quad(widthline+50, (33+20*y), widthline+60, (33+20*y)+10, widthline+70, (33+20*y), widthline+60, (33+20*y)-10);
-          fill(255);
-          if (id==105 || objeto.isNull("si") == false ) text(idiomagui.getString("Agregar")+" "+idiomagui.getString("Si"),15, height-22);
-          else if (objeto.isNull("sino") == false) text(idiomagui.getString("Agregar")+" "+idiomagui.getString("Sino"),15, height-22);
-        } else {
-          fill(#1BF50C);
-          ellipse(widthline+60, 33+20*y, 20, 20);
-          fill(255);
-          text(idiomagui.getString("Agregar"),15, height-22);
-        }
-
-        fill(0);
-        text("+", widthline+53, 37+20*y);
-        stroke(128);
-      }
-
-      // muestra boton agregar sino dede linea si
-      if (mouseX>widthline+140 && mouseX<widthline+160) {
-        if (objeto.isNull("si") == false ) { 
-          fill(#FFEC12); 
-          quad(widthline+140, (33+20*y), widthline+150, (33+20*y)+10, widthline+160, (33+20*y), widthline+150, (33+20*y)-10);
-        }
-        fill(255);
-        if( objetoml.isNull("si") == false || objetoml.isNull("sino") == false){
-          text(idiomagui.getString("Agregar")+" "+idiomagui.getString("Sino"),15, height-22);  
-          fill(0);
-          text("+", widthline+143, 37+20*y);
-          stroke(128);
-        }
-      }
-
-
-
-      // muestra boton eliminar línea
-      if (mouseX>widthline+80 && mouseX<widthline+100) {
-
-        fill(255, 0, 0);
-        line(40, 33+20*y, widthline+85, 33+20*y);
-        noStroke();
-        ellipse(widthline+90, 33+20*y, 20, 20);
-        fill(0);
-        text("-", widthline+85, 37+20*y);
-        stroke(128);
-        fill(255);
-        text(idiomagui.getString("Eliminar"),15, height-22);
-      }   
-
-      // muesta boton agregar línea fuera del if
-      if (mouseX>widthline+110 && mouseX<widthline+130) {
-        if (objeto.isNull("si") == false || objeto.isNull("sino") == false) {
-          fill(#1BF50C);
-          ellipse(widthline+120, 33+20*y, 20, 20);
-          fill(0);
-          text("+", widthline+113, 37+20*y);
-          fill(255);
-          text(idiomagui.getString("Agregar"),15, height-22);
-        }
-      }
-
-
+      
+          // resalta linea que apunta el mouse solo hasta el final de la línea
+          fill(50);
+          rect(0, 22+20*y, widthline+40, 20);
+          //if (codetab==0) rect(0, 22+20*(y-icodigo), widthline+40, 20);
     }
+    
+    
+
+
 
     // Resalta linea en ejecucion al presionar boton parar
     if (lineaanterior!=0) { 
@@ -458,11 +400,117 @@ Grayscale  =   RGB
   // fin barra superior
     
     
+//////////////////////
+//bototones agregar
+/////////////////////
+
+    if (y>0 && y <=tlineas && mouseY<height-71 && tlineas >= icodigo+y ) {
+
+      
+      //if(y<=maximolineas)linearaton=y; 
+      if (codetab==0) if(icodigo+(lineaactual)<= maximolineas) linearaton=y; 
+      if (codetab==1) if(imouse+(lineaactual)<= maximolineas) linearaton=y; 
+      if (codetab==2) if(iteclado+(lineaactual)<= maximolineas) linearaton=y; 
+
+      JSONObject objeto;
+      objeto = new JSONObject();
+      // aquí se carga la instruccion a la que apunta el raton y se carga el id de dicha instrucción
+      if (codetab==0) objeto = cargacodigo.getJSONObject(lineaactual);
+      if (codetab==1) objeto = cargamouse.getJSONObject(lineaactual);
+      if (codetab==2) objeto = cargateclado.getJSONObject(lineaactual);
+      int id = objeto.getInt("id");
+      mouseid = id;
+      fill(50);
+
+      // se calcula el tamaño en pixels de la linea
+      //leelinea(linearaton-1);
+      if (codetab==0)leelinea(lineaactual);
+      if (codetab==1)leelinea(lineaactual);
+      if (codetab==2)leelinea(lineaactual);
+      widthline = int(textWidth(""+line));
+
+      // resalta linea que apunta el mouse solo hasta el final de la línea
+      //rect(0, 22+20*y, widthline+40, 20);
+
+      // muestra boton agregar línea
+      if (mouseX>widthline+50 && mouseX<widthline+70) {
+        noStroke();
+
+        if (id==105 || objeto.isNull("si") == false || objeto.isNull("sino") == false) {
+          fill(0, 0, 255); 
+          quad(widthline+50, (33+20*y), widthline+60, (33+20*y)+10, widthline+70, (33+20*y), widthline+60, (33+20*y)-10);
+          fill(255);
+          if (id==105 || objeto.isNull("si") == false ) text(idiomagui.getString("Agregar")+" "+idiomagui.getString("Si"),15, height-22);
+          else if (objeto.isNull("sino") == false) text(idiomagui.getString("Agregar")+" "+idiomagui.getString("Sino"),15, height-22);
+        } else {
+          fill(#1BF50C);
+          ellipse(widthline+60, 33+20*y, 20, 20);
+          fill(255);
+          text(idiomagui.getString("Agregar"),15, height-22);
+        }
+
+        fill(0);
+        text("+", widthline+53, 37+20*y);
+        stroke(128);
+      }
+
+      // muestra boton agregar sino dede linea si
+      if (mouseX>widthline+140 && mouseX<widthline+160) {
+        if (objeto.isNull("si") == false ) { 
+          fill(#FFEC12); 
+          //fill(255);
+          quad(widthline+140, (33+20*y), widthline+150, (33+20*y)+10, widthline+160, (33+20*y), widthline+150, (33+20*y)-10);
+          //text(idiomagui.getString("Agregar")+" "+idiomagui.getString("Sino"),15, height-22);  
+        }
+        fill(255);
+        if( objeto.isNull("si") == false || objeto.isNull("sino") == false){
+          text(idiomagui.getString("Agregar")+" "+idiomagui.getString("Sino"),15, height-22);  
+          fill(0);
+          text("+", widthline+143, 37+20*y);
+          stroke(128);
+        }
+      }
+
+
+
+      // muestra boton eliminar línea
+      if (mouseX>widthline+80 && mouseX<widthline+100) {
+
+        fill(255, 0, 0);
+        line(40, 33+20*y, widthline+85, 33+20*y);
+        noStroke();
+        ellipse(widthline+90, 33+20*y, 20, 20);
+        fill(0);
+        text("-", widthline+85, 37+20*y);
+        stroke(128);
+        fill(255);
+        text(idiomagui.getString("Eliminar"),15, height-22);
+      }   
+
+      // muesta boton agregar línea fuera del if
+      if (mouseX>widthline+110 && mouseX<widthline+130) {
+        if (objeto.isNull("si") == false || objeto.isNull("sino") == false) {
+          fill(#1BF50C);
+          //fill(128);
+          ellipse(widthline+120, 33+20*y, 20, 20);
+          fill(0);
+          text("+", widthline+113, 37+20*y);
+          fill(255);
+          text(idiomagui.getString("Agregar"),15, height-22);
+        }
+      }
+
+
+    }
+    
+    
     
       // Muestra prototipo de la instrucción en la barra inferior
       fill(255);
       if (posy>20 && mouseX<widthline+40)text(prototipoinstru.getString(str(mouseid)),15, height-22);
 
+
+//Ftext(icodigo+"  "+(linearaton-1)+"   "+lineaactual,mouseX, mouseY);
 
   }
   void keyPressed() {
@@ -615,6 +663,8 @@ Grayscale  =   RGB
       icodigo=0;
       imouse=0;
       iteclado=0;
+      maximolineas=0; 
+      lineaactual=0;
        
       line=""+idiomaactual.get(str(-1));
       idlee=-1;
@@ -710,14 +760,14 @@ Grayscale  =   RGB
 
     // Boton normal agergar línea
 
-    if (mouseX>widthline+50 && mouseX<widthline+70 && mouseY>40 && mouseY< height-72) {
+    if (mouseX>widthline+50 && mouseX<widthline+70 && mouseY>40 && mouseY< height-72 && tlineas >= icodigo+y) {
 
       // lee ide de la linea de código donde se hizo click para agregar nueva linea
       JSONObject objeto;
       objeto = new JSONObject();
-      if (codetab==0) objeto = cargacodigo.getJSONObject(linearaton-1); 
-      if (codetab==1) objeto = cargamouse.getJSONObject(linearaton-1); 
-      if (codetab==2) objeto = cargateclado.getJSONObject(linearaton-1); 
+      if (codetab==0) objeto = cargacodigo.getJSONObject(lineaactual); 
+      if (codetab==1) objeto = cargamouse.getJSONObject(lineaactual); 
+      if (codetab==2) objeto = cargateclado.getJSONObject(lineaactual); 
       int idclick = objeto.getInt("id");
       // Fin lee ide de la linea de código donde se hizo click para agregar nueva linea
 
@@ -729,7 +779,7 @@ Grayscale  =   RGB
 
       // agrega línea en pestaña PRINCIPAL
       if (codetab==0) {
-        if (linearaton==tlineas) {
+        if (lineaactual+1==tlineas) {
           cargacodigo.append(obj);
           tlineas++;
         } else {
@@ -790,7 +840,8 @@ Grayscale  =   RGB
 
 
     // boton verde agergar línea en SI y SINO
-    if( objetoml.isNull("si") == false || objetoml.isNull("sino") == false) if( y<=tlineas && mouseX>widthline+110 && mouseX<widthline+130 && mouseY>40 && mouseY< height-72) {
+    //if( objetoml.isNull("si") == false || objetoml.isNull("sino") == false) 
+    if( y<=tlineas && mouseX>widthline+110 && mouseX<widthline+130 && mouseY>40 && mouseY< height-72 && tlineas >= icodigo+y) {
       JSONObject obj = new JSONObject();
       obj.setInt("id", -1);
 
@@ -859,8 +910,8 @@ Grayscale  =   RGB
 
 
     // boton agregar sino dede linea si
-    if( objetoml.isNull("si") == false || objetoml.isNull("sino") == false) if (mouseY>40 && mouseY< height-72 && mouseY<width && y<=tlineas && mouseX>widthline+140 && mouseX<widthline+160) {
-
+    //if( objetoml.isNull("si") == false || objetoml.isNull("sino") == false) 
+    if (mouseY>40 && mouseY< height-72 && mouseY<width && y<=tlineas && mouseX>widthline+140 && mouseX<widthline+160 && tlineas >= icodigo+y) {
       JSONObject obj = new JSONObject();
       obj.setInt("id", -1);
       obj.setInt("sino", 1);
@@ -932,25 +983,8 @@ Grayscale  =   RGB
     // boton eliminar línea
     /////////////////////////
 
-    if (mouseX>widthline+80 && mouseX<widthline+100 && mouseY>40 && mouseY< height-72) {
-      if (linearaton>1 || tlineas>1) {
-        // pestaña principal
-        if (codetab==0) { 
-          cargacodigo.remove(linearaton-1);
-          tlineas--;
-        }
-        // pestaña raton
-        if (codetab==1) { 
-          cargamouse.remove(linearaton-1);
-          tlineasmouse--;
-        }
-        // pestaña teclado
-        if (codetab==2) { 
-          cargateclado.remove(linearaton-1); 
-          tlineasteclado--;
-        }
-        tlineas--;
-      } else {
+    if (mouseX>widthline+80 && mouseX<widthline+100 && mouseY>40 && mouseY< height-72 && tlineas >= icodigo+y) {
+     if(lineaactual==0 && codetab==0 && tlineas==1){
 
         linea=1; 
         tlineas=1;
@@ -961,21 +995,55 @@ Grayscale  =   RGB
         if (codetab==1) cargamouse.setJSONObject(0, renuevaobjeto);
         if (codetab==2) cargateclado.setJSONObject(0, renuevaobjeto);
 
+      } else {
+      
+      //if (linearaton>1 || tlineas>1) {
+        
+        // pestaña principal
+        if (codetab==0) { 
+          cargacodigo.remove(lineaactual);
+          tlineas--;
+          lineaactual--;
+        }
+        // pestaña raton
+        if (codetab==1) { 
+          cargamouse.remove(lineaactual);
+          tlineasmouse--;
+          lineaactual--;
+        }
+        // pestaña teclado
+        if (codetab==2) { 
+          cargateclado.remove(lineaactual); 
+          tlineasteclado--;
+          lineaactual--;
+        }
+      
       }
+      //} 
+      
+
     }
 
 
     // Abre la ventana de la instrucción en la que se hizo click con el boton izquierdo
     if (y < tlineas+1 && ventana==false && mouseButton==LEFT && mouseX < widthline+40 && mouseY>40 && mouseY< height-70 ) {
       ventana=true;
+      
+      /*
       if(codetab==0) lineaclik = icodigo+linearaton-1;
       if(codetab==1) lineaclik = imouse+linearaton-1;
       if(codetab==2) lineaclik = iteclado+linearaton-1;
+      */
+      
+      if(codetab==0) lineaclik = lineaactual;
+      if(codetab==1) lineaclik = lineaactual;
+      if(codetab==2) lineaclik = lineaactual;
+      
       ventatamx = 550;
       wininstru = new PWindow3();
     }
 
-// Botón Flecha Arriba reduce i (volver al inicio del códogio - primera línea)
+// Botón subir o Flecha Arriba reduce i (volver al inicio del códogio - primera línea)
 
     if(mouseX>width-21 && mouseY<60 && mouseY>40){
       //linearaton=1;
@@ -989,20 +1057,17 @@ Grayscale  =   RGB
     if(mouseX>width-21 && mouseY<height-45 && mouseY>height-65){ 
       linearaton=1;
         if(codetab==0){ // codigo
-            if( icodigo < tlineas-34 && tlineas>35)icodigo++; 
-            if(icodigo < tlineas && tlineas<35) icodigo++; 
+            if( icodigo < tlineas-maximolineas && tlineas>maximolineas)icodigo++; 
         }
         if(codetab==1){ // mouse
-            if( imouse < tlineasmouse-34 && tlineasmouse>35) imouse++;  
-            if( imouse < tlineasmouse && tlineasmouse<35) imouse++;  
+            if( imouse < tlineasmouse-maximolineas && tlineasmouse>maximolineas) imouse++;  
         }
         if(codetab==2){ // teclado
-            if( iteclado < tlineasteclado-34 && tlineasteclado>35)iteclado++; 
-            if ( iteclado < tlineasteclado && tlineasteclado<35) iteclado++; 
+            if( iteclado < tlineasteclado-maximolineas && tlineasteclado>maximolineas)iteclado++; 
         }
     }
 
-  } // fin mousePressed
+  } // fin void mousePressed
 
 void mouseWheel(MouseEvent event) {
   //float e = event.getCount();
@@ -1021,16 +1086,16 @@ void mouseWheel(MouseEvent event) {
     if(event.getCount()>0){ 
       linearaton=1;
         if(codetab==0){ // codigo
-            if( icodigo < tlineas-34 && tlineas>35)icodigo++; 
-            if(icodigo < tlineas && tlineas<35) icodigo++; 
+            if( icodigo < tlineas-maximolineas && tlineas>maximolineas)icodigo++; 
+            //if(icodigo < tlineas && tlineas<35) icodigo++; 
         }
         if(codetab==1){ // mouse
-            if( imouse < tlineasmouse-34 && tlineasmouse>35) imouse++;  
-            if( imouse < tlineasmouse && tlineasmouse<35) imouse++;  
+            if( imouse < tlineasmouse-maximolineas && tlineasmouse>maximolineas) imouse++;  
+            //if( imouse < tlineasmouse && tlineasmouse<35) imouse++;  
         }
         if(codetab==2){ // teclado
-            if( iteclado < tlineasteclado-34 && tlineasteclado>35)iteclado++; 
-            if ( iteclado < tlineasteclado && tlineasteclado<35) iteclado++; 
+            if( iteclado < tlineasteclado-maximolineas && tlineasteclado>maximolineas)iteclado++; 
+            //if ( iteclado < tlineasteclado && tlineasteclado<35) iteclado++; 
         }
     }
 
@@ -1075,7 +1140,8 @@ void mouseWheel(MouseEvent event) {
       } else 
       if (objetoml.isNull("colorh") == false) {
         fill(unhex(objetoml.getString("colorh")));
-        rect(widthlinenow+37, 22+20*(i+1), 10, 20);
+        //rect(widthlinenow+37, 22+20*(i+1), 10, 20);
+        if(codetab==0)rect(widthlinenow+37, 22+((20*(i+1))-(20*icodigo)), 10, 20);  //text(line, 40, 60+((20*(i+1))-(20*icodigo) ));
         fill(255);
       } else 
       if (objetoml.isNull("colorv") == false) {
@@ -1095,22 +1161,41 @@ void mouseWheel(MouseEvent event) {
 
       if (objetoml.isNull("si") == false) {
 
-          text("    "+idiomaactual.get(str(id)), 40, 60+(20*i));
+          //text("    "+idiomaactual.get(str(id)), 40, 60+(20*i));
+          
+          if(codetab==0)text("    "+idiomaactual.get(str(id)), 40, 60+((20*i)-(20*icodigo) ));
+          if(codetab==1)text("    "+idiomaactual.get(str(id)), 40, 60+((20*i)-(20*imouse) ));
+          if(codetab==2)text("    "+idiomaactual.get(str(id)), 40, 60+((20*i)-(20*iteclado) ));
 
 
       } else if (objetoml.isNull("sino") == false) {
 
           fill(255); 
-          text(""+idiomagui.get("Sino"), 40, 60+(20*i)); 
+          //text(""+idiomagui.get("Sino"), 40, 60+(20*i));
+          if(codetab==0)text(""+idiomagui.get("Sino"), 40, 60+((20*i)-(20*icodigo) ));
+          if(codetab==1)text(""+idiomagui.get("Sino"), 40, 60+((20*i)-(20*imouse) ));
+          if(codetab==2)text(""+idiomagui.get("Sino"), 40, 60+((20*i)-(20*iteclado) ));
           fill(#F5AB0A);  
-          text(""+idiomaactual.get(str(id)), 40+textWidth("           "), 60+(20*i));
+          //text(""+idiomaactual.get(str(id)), 40+textWidth("           "), 60+(20*i));
+          
+          if(codetab==0)text(""+idiomaactual.get(str(id)), 40+textWidth("           "), 60+((20*i)-(20*icodigo) ));
+          if(codetab==1)text(""+idiomaactual.get(str(id)), 40+textWidth("           "), 60+((20*i)-(20*imouse) ));
+          if(codetab==2)text(""+idiomaactual.get(str(id)), 40+textWidth("           "), 60+((20*i)-(20*iteclado) ));
 
 
       } else {
         if (objetoml.isNull("encapsulado") == true) {
-          text(""+idiomaactual.get(str(id)), 40, 60+(20*i)); 
+          
+          
+          if(codetab==0)text(""+idiomaactual.get(str(id)), 40, 60+((20*i)-(20*icodigo) ));
+          if(codetab==1)text(""+idiomaactual.get(str(id)), 40, 60+((20*i)-(20*imouse) ));
+          if(codetab==2)text(""+idiomaactual.get(str(id)), 40, 60+((20*i)-(20*iteclado) ));
+          
         } else { 
-          text("    "+idiomaactual.get(str(id)), 40, 60+(20*i)); 
+          //text("    "+idiomaactual.get(str(id)), 40, 60+(20*i));
+          if(codetab==0)text("    "+idiomaactual.get(str(id)), 40, 60+((20*i)-(20*icodigo) ));
+          if(codetab==1)text("    "+idiomaactual.get(str(id)), 40, 60+((20*i)-(20*imouse) ));
+          if(codetab==2)text("    "+idiomaactual.get(str(id)), 40, 60+((20*i)-(20*iteclado) ));
         }
       }
     }
@@ -1325,7 +1410,9 @@ void guardameta(){
           }          
         }// fin if
       } // fin for
-
+      
+      lib[0]=lib[0]+"// Generated with Meta_Processing Alpha 1.1\n// https://github.com/hiteclab/Meta_Processing/releases\n";
+      
       if (libminim==true) {
         lib[0]=lib[0]+"\nimport ddf.minim.*;\n";
       }
@@ -1337,7 +1424,6 @@ void guardameta(){
       }
       textof = expand(texto, 1);
       textof [0] = lib[0];
-
 
     textof [0] =textof [0] +"\nfloat ";
     for (int i=0; i< varenterasnom.size(); i++) {
@@ -1454,6 +1540,15 @@ void folderSelected(File selection) {
     icodigo=0;
     imouse=0;
     iteclado=0;
+    maximolineas=0;
+    lineaactual=0;
+    
+    linea=1;
+    lineamouse=1;
+    lineateclado=1;
+    
+    linearaton=1; 
+    lineaclik=0;
     
     // esta parte actualiza el archivo lastopen.txt con el proyecto abierto
     String[] last = new String[1];

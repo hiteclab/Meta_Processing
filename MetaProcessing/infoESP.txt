@@ -2,8 +2,7 @@
 META_PROCESSING Version Alpha 1.1
 ---------------------------------
 
-Es un lenguaje de Meta Programación para principiantes basado en el lenguaje Processing. Puedes escribir y leer el mismo código en diferentes lenguajes, nicialmente en Español, Frances, hindi (हिन्दी), Japones (日本人), Italiano, Chino (中文), Portugues e Ingles. Todo el código creado con Meta_Processing es exportado como código en lenguaje Processing. Es un entorno de programación diseñado para no dejarte cometer errores de sintaxis. Ahora con soporte para comunicarse con tarjetas Arduino usando Firmata.
+Es un lenguaje de Meta Programación para principiantes basado en el lenguaje Processing. Puedes escribir y leer el mismo código en diferentes lenguajes, nicialmente en Español, Frances, hindi (हिन्दी), Japones (日本人), Italiano, Chino (中文), Portugues e Ingles. Todo el código creado con Meta_Processing es exportado como código en lenguaje Processing. Es un entorno de programación diseñado para no dejarte cometer errores de sintaxis. Ahora ofrece soporte para comunicarse con tarjetas Arduino usando Firmata y permite desplazar las líneas de código con el mouse.
 
 
-Creado por Jose David Cuartas, (c) 2020 Licencia  GPL v.3 Desarrollado usando Processing 3.4 En el laboratorio Hiteclab, http://hiteclab.libertadores.edu.co
-Fundación Universitaria Los Libertadores, Bogotá, Colombia.
+Software libre creado por Jose David Cuartas, (c) 2020 bajo Licencia  GPL v.3 . Desarrollado usando Processing 3.4 para el Laboratorio Hitec lab, http://hiteclab.libertadores.edu.co de la Fundación Universitaria Los Libertadores, Bogotá, Colombia.
