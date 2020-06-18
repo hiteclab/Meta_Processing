@@ -16,11 +16,11 @@ Fundacion Universitaria Los Libertadores, Bogotá, Colombia
 
 A fork of META_PROCESSING is [META_JAVASCRIPT](https://github.com/hiteclab/Meta_Javascript) where all the code created is exported as Javascript language code.
 
-**Download Book Meta_Processing Alpha 1.0**
-[English Version](https://github.com/hiteclab/Meta_Processing/raw/master/MetaprocessingApha1.0ENG.pdf)
+**Download Book Meta_Processing Alpha 1.1**
+[English Version](https://github.com/hiteclab/Meta_Processing/raw/master/MetaprocessingAlpha1.1ENG.pdf)
 
-**Read Online Book Meta_Processing Alpha 1.0**
-[English Version](https://github.com/hiteclab/Meta_Processing/blob/master/MetaprocessingApha1.0ENG.pdf)
+**Read Online Book Meta_Processing Alpha 1.1**
+[English Version](https://github.com/hiteclab/Meta_Processing/blob/master/MetaprocessingAlpha1.1ENG.pdf)
 
 
 [![Meta Processing Alpha 1.0](https://img.youtube.com/vi/bj78B7jIkTU/0.jpg)](https://www.youtube.com/watch?v=d6UnVuAlSkA&feature=youtu.be "Meta Processing Alpha 1.0")
