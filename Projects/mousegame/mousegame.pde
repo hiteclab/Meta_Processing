@@ -1,3 +1,5 @@
+// Generated with Meta_Processing Alpha 1.2
+// https://github.com/hiteclab/Meta_Processing/releases
 
 import ddf.minim.*;
 
@@ -7,16 +9,8 @@ Minim canal;
 AudioOutput nota;
 
  void settings() { 
-fullScreen(); 
+size(displayWidth, displayHeight); 
 }
-
- void setup(){ 
-frameRate(60);
- canal = new Minim(this);
- nota = canal.getLineOut();
- nota.setTempo( 60 );
- nota.playNote( 0.7, 0);
-} 
 
 void draw(){
 

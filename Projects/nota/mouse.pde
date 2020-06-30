@@ -1,4 +1,5 @@
 void mousePressed(){
+ click=mouseButton;
 
 
 
