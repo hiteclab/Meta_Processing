@@ -25,18 +25,23 @@ class PWindow4 extends PApplet {
   void draw() {
     background(0);
     posy= mouseY-mouseY % 20;
-    y= ((posy-40)/20)+1;
+    y= ((posy-40)/20)+2;
+    //println(y);
     fill(60);
-    if (posy>0 && posy<= 20*(varenterasnom.size()-1))rect(0, posy, width, 20);
+    if (posy<= 20*(varenterasnom.size()-1))rect(0, posy, width, 20);
     
-    for (int i=1; i< varenterasnom.size(); i++) {
+    for (int i=0; i< varenterasnom.size(); i++) {
       if(i<7)fill(128); else fill(255);
-      text(varenterasnom.get(i), 30, 17+(i*20)); // muestra nombres variables
+      //text(varenterasnom.get(i), 30, 17+(i*20)); // muestra nombres variables
+      //println(varenterasnom.get(i));
+      if(i<7)text(idiomagui.getString(varenterasnom.get(i)), 30, 17+(i*20)); // muestra nombres variables
+      else text(varenterasnom.get(i), 30, 17+(i*20)); // muestra nombres variables
+      
     }
   }
 
   void mousePressed() {
-    nvarselec = y+1;
+    nvarselec = y;
     varclicked=true;
     
     // boton inicializar bariable
@@ -58,21 +63,21 @@ class PWindow4 extends PApplet {
       
       }
       
-    //exit();
+    exit();
     surface.setVisible(false);
     
   }
 
   void exit()
   {
-    selectvarini = false;
+    if(nvarselec<7)selectvarini = false;
     dispose();
   }
 
 }
 
 void creavariables(){
-      varenterasnom.append("paraciclo");
+      varenterasnom.append("ciclo");
       varenterasnom.append("tecla");
       varenterasnom.append("click");
       varenterasnom.append("ratonX");

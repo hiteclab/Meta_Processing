@@ -30,7 +30,7 @@
    "ancho": "ancho",
    "alto": "alto",
    "tecla": "tecla",
-   "click": "click",
+   "click": "clic",
    "Nuevo": "Nuevo",
    "Abrir": "Abrir",
    "Guardar": "Guradar",
@@ -76,5 +76,14 @@
    "puente": "puente",
    "activar": "activar",
    "puerto": "puerto",
-   "cerrar": "cerrar"
+   "cerrar": "cerrar",
+   "hasta": "Hasta",
+   "Nombre": "Nombre",
+   "Mostrar": "Mostrar",
+   "Ocultar": "Ocultar",
+   "inicial": "inicial",
+   "Condición": "Condición",
+   "Incremento": "Incremento",
+   "ciclo": "ciclo",
+   "mientras": "mientras"
 }

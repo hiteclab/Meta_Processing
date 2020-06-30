@@ -22,5 +22,20 @@
    "101": "ellipse (position x, position y, largeur, hauteur)",
    "105": "oui (value1 operator value2) L'opérateur peut être:>, ==, <,> =, <= ,! =",
    "118": "vidéo (nom de la vidéo, position x, position y, largeur, hauteur)",
-   "111": "pour (de la valeur; à la condition; incrémenter la valeur)"
+   "111": "pour (de la valeur; à la condition; incrémenter la valeur)",
+   "10": "sortienumérique ( broche Arduino, valeur numérique) 1 = marche / 0 = arrêt ",
+   "11": "entréenumérique ( broche Arduino, variable) ",
+   "12": "entréeanalogique ( broche Arduino, variable) ",
+   "13": "servomoteur ( broche Arduino, angle) ",
+   "-10": "sortienumérique ( broche Arduino, valeur numérique) 1 = marche / 0 = arrêt ",
+   "-11": "entréenumérique ( broche Arduino, variable) ",
+   "-12": "entréeanalogique ( broche Arduino, variable) ",
+   "-13": "servomoteur ( broche Arduino, angle) ",
+   "20": "objet (image, position x, position y)",
+   "21": "collision (position x1, position y1, largeur1, hauteur1, position x2, position y2, largeur2, hauteur2)",
+   "30": "lireURL (variable, url) enregistre le texte lu depuis l'url dans la variable",
+   "40": "code avancé écrit en langage: Processing / Java",
+   "64": "multiplier (variable, valeur à multiplier)",
+   "65": "diviser (variable, valeur à diviser)",
+   "66": "Écrivez la formule"
 }

@@ -1,11 +1,10 @@
 void configuracion() {
   
   println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-  println("  META_PROCESSING Version Alpha 1.0");
+  println("  META_PROCESSING Version Alpha 1.2");
   println("  Developed using Processing 3.4");
   println("  (c) 2020  Jose David Cuartas, GPL v.3\n  Hiteclab, http://hiteclab.libertadores.edu.co/\n  Fundación Universitaria Los Libertadores, Colombia");
   println("  Contact us: hiteclab@libertadores.edu.co");
-
 
 
   codefolder=dataPath("");
@@ -64,7 +63,8 @@ void configuracion() {
         cargamouse = loadJSONArray(sketchfolder+"/"+proyectonombre+"/"+"raton.json");
         cargateclado = loadJSONArray(sketchfolder+"/"+proyectonombre+"/"+"teclado.json");
       
-        configuration = loadJSONArray(sketchfolder+"/"+proyectonombre+"/configuracion.json");
+        configuration = loadJSONArray(sketchfolder+"/"+proyectonombre+"/propiedades.json");
+        cargaconfiguracion = loadJSONArray(sketchfolder+"/"+proyectonombre+"/configuracion.json");
         cargavars = loadJSONArray(sketchfolder+"/"+proyectonombre+"/variables.json");
       
       
@@ -73,13 +73,14 @@ void configuracion() {
           fullscreen=false;
         } else fullscreen=true;
       
-        // poner en el archivo configuracion.json en la key llamada "cuadros" el volor 0 para tener la velocidad por defecto de processing
+        // poner en el archivo propiedades.json en la key llamada "cuadros" el volor 0 para tener la velocidad por defecto de processing
         if (configuration.getJSONObject(1).getInt("cuadros")!= 0) {
-          frameRate(configuration.getJSONObject(1).getInt("cuadros"));
+          //frameRate(configuration.getJSONObject(1).getInt("cuadros"));
         //if (configuration.getJSONObject(1).getInt("cuadros")!= 0) 
           velocidad= configuration.getJSONObject(1).getInt("cuadros");}
-        frameRate(velocidad);
+        //frameRate(velocidad);
         port= configuration.getJSONObject(2).getInt("puerto");
+        
     }
   
    else {

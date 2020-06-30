@@ -22,5 +22,20 @@
    "101": "ellipse",
    "105": "oui",
    "118": "vidéo",
-   "111": "pour"
+   "111": "pour",
+   "10": "sortienumérique",
+   "11": "entréenumérique",
+   "12": "entréeanalogique",
+   "13": "servomoteur",
+   "-10": "sortienumérique",
+   "-11": "entréenumérique",
+   "-12": "entréeanalogique",
+   "-13": "servomoteur",
+   "20": "objet",
+   "21": "collision",
+   "30": "lireURL",
+   "40": " ",
+   "64": "multiplier",
+   "65": "diviser",
+   "66": " "
 }

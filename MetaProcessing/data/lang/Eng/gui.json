@@ -76,5 +76,14 @@
    "puente": "bridge",
    "activar": "activate",
    "puerto": "port",
-   "cerrar": "close"
+   "cerrar": "close",
+   "hasta": "Until",
+   "Nombre": "Name",
+   "Mostrar": "Display",
+   "Ocultar": "Hide",
+   "inicial": "initial",
+   "Condición": "Condition",
+   "Incremento": "Increment",
+   "ciclo": "cycle",
+   "mientras": "while"
 }
