@@ -1,11 +1,7 @@
 // Generated with Meta_Processing Alpha 1.2
 // https://github.com/hiteclab/Meta_Processing/releases
 
-import ddf.minim.*;
-
-float paraciclo=0,tecla=0,click=0,ratonX=0,ratonY=0,ancho=0,alto=0;
-Minim canal; 
-AudioOutput nota;
+float ciclo=0,tecla=0,click=0,ratonX=0,ratonY=0,ancho=0,alto=0;
 
  void settings() { 
 size(displayWidth, displayHeight); 
@@ -18,5 +14,8 @@ void draw(){
  ancho=width; 
  alto=height; 
 
-
+background( 0 );
+for( ciclo =0; ciclo < 300 ; ciclo = ciclo +30 ){
+    rect( ciclo, 80, 20, 20 );
+    }
 }
