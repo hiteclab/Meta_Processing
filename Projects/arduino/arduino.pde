@@ -1,22 +1,17 @@
+// Generated with Meta_Processing Alpha 1.2
+// https://github.com/hiteclab/Meta_Processing/releases
 
 import processing.serial.*;
 import cc.arduino.*;
 
  Arduino arduino;
 
-float paraciclo=0,tecla=0,click=0,ratonX=0,ratonY=0,ancho=0,alto=0,x=0,giro=0;
+float ciclo=0,tecla=0,click=0,ratonX=0,ratonY=0,ancho=0,alto=0,x=0,giro=0;
 
 
  void settings() { 
 size(displayWidth, displayHeight); 
 }
-
- void setup(){
-surface.setResizable(true); 
-frameRate(60);
-try { arduino = new Arduino(this, Arduino.list()[0], 57600); } catch (Exception e) { exit(); }
-
-} 
 
 void draw(){
 
