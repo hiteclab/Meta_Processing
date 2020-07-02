@@ -3936,6 +3936,11 @@ class PWindow3 extends PApplet {
         last[0] =  proyectonombre;
         saveStrings(sketchfolder+"/lastopen.txt", last );
         updatewindowname=true;
+              
+        // crea archivo de código global llamado global.txt
+        String[] global = new String[1];
+        global [0] = "// Generated with Meta_Processing Alpha 1.2\n// https://github.com/hiteclab/Meta_Processing/releases\n";
+        saveStrings(sketchfolder+proyectonombre+"/global.txt", global);
 
 
         exit();
@@ -4559,7 +4564,7 @@ class PWindow3 extends PApplet {
         datos= datos.substring(0, datos.length()-1);
       }
     } else {
-      if (key != CODED)datos= datos+key;
+      if (key != CODED && keyCode != ENTER)datos= datos+key;
     }
 
     return datos;

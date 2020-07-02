@@ -1018,10 +1018,11 @@ Grayscale  =   RGB
       cargamouse.setJSONObject(0, renuevaobjeto);         
       cargateclado.setJSONObject(0, renuevaobjeto);
       cargaconfiguracion.setJSONObject(0, renuevaobjeto);
+      
+
+      
       guardameta();
       guardapde(1);
-
-    
 
       
     }
@@ -1729,6 +1730,7 @@ void guardameta(){
         metaprincipal[0] = metaprincipal[0]+line+"\n";
       }
       saveStrings(sketchfolder+proyectonombre+"/meta/principal.meta", metaprincipal);
+      
 }  
   
   //////////////////
@@ -1969,7 +1971,9 @@ void guardameta(){
         }// fin if
       } // fin for
       
-      lib[0]=lib[0]+"// Generated with Meta_Processing Alpha 1.2\n// https://github.com/hiteclab/Meta_Processing/releases\n";
+      //lib[0]=lib[0]+"// Generated with Meta_Processing Alpha 1.2\n// https://github.com/hiteclab/Meta_Processing/releases\n";
+      
+
       
       if (libminim==true) {
         lib[0]=lib[0]+"\nimport ddf.minim.*;\n";
@@ -2042,6 +2046,10 @@ void guardameta(){
         lib[0]="\n\nvoid movieEvent(Movie m) { \n m.read(); \n}";
         textof = concat(textof, lib);
       }
+      
+      // con estas dos línas se agrega el codígo global que se puede agregar en el archivo global.txt ubicado en la raiz del proyecto
+      String[] readglobal = loadStrings(sketchfolder+proyectonombre+"/global.txt");
+      textof = concat(readglobal, textof);
 
       //if(modo==0) saveStrings(codefolder+"/temp/temp.pde", textof);
       if(modo==1) saveStrings(sketchfolder+proyectonombre+"/"+proyectonombre+".pde", textof);
