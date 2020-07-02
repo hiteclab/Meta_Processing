@@ -5,7 +5,7 @@
 **META_PROCESSING Alpha 1.2 English**
 
 Is a meta-programming language for beginners based in the [Processing](https://processing.org/) language. 
-You can write and read the code in different languages, initially Spanish, Française, Hindi (हिन्दी), Japanese (日本人), Italiano, Chinese (中文), Português and English. All the code created with Meta_Processing is exported as Processing language code. Is a Programming environment that does not let you make syntax mistakes. **Now supports communication with Arduino Boards using Firmata and ESP boards using IoTControllerAP https://github.com/hiteclab/IoTControllerAP.**
+You can write and read the code in different languages, initially Spanish, Française, Hindi (हिन्दी), Japanese (日本人), Italiano, Chinese (中文), Português and English. All the code created with Meta_Processing is exported as Processing language code. Is a Programming environment that does not let you make syntax mistakes. **Now supports communication with Arduino boards using Firmata and ESP boards using IoTControllerAP https://github.com/hiteclab/IoTControllerAP.**
 
 Created by Jose David Cuartas, (c) 2020 
 license GPL v.3
