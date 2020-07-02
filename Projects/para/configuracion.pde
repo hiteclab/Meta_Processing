@@ -1,7 +1,7 @@
 void setup(){
 
 surface.setResizable(true); 
-frameRate(1);
+frameRate(2);
 
 
 

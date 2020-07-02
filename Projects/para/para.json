@@ -15,6 +15,21 @@
     "instruccion": "para"
   },
   {
+    "pde": "c = random(255);",
+    "vmaximo": 255,
+    "para": true,
+    "variable": "c",
+    "id": 97,
+    "instruccion": "aleatorio"
+  },
+  {
+    "pde": "fill( c );",
+    "para": true,
+    "id": 102,
+    "colorv": "c",
+    "instruccion": "relleno"
+  },
+  {
     "pde": "rect( ciclo, 80, 20, 20 );",
     "para": true,
     "tx": 20,
@@ -23,6 +38,5 @@
     "id": 114,
     "instruccion": "rectangulo",
     "pxv": "ciclo"
-  },
-  {"id": -1}
+  }
 ]
