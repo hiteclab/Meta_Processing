@@ -1,9 +1,0 @@
-sinlínea
-relleno ( #FF5ADB38 ) 
-sumar ( contador , 0.1 )
-si  ( contador > 5 )
-    aleatorio ( px , 1900 )
-    aleatorio ( py , 1040 )
-    rectángulo ( px , py , 40 , 40 )
-    asignar ( contador , 0 )
-

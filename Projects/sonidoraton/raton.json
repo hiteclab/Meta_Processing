@@ -1,6 +1,0 @@
-[{
-  "pde": "AudioPlayer cancion = canal.loadFile( \"melo.wav\", 2048);\ncancion.rewind(); \ncancion.play();",
-  "id": 100,
-  "nombre": "melo.wav",
-  "instruccion": "sonido"
-}]

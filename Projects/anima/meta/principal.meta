@@ -1,8 +1,0 @@
-background ( px ) 
-add ( px , 0.5 )
-subtract ( py , 0.5 )
-fill ( #FFFADE38 ) 
-ellipse ( 200 , py , 200 , 200 )
-fill ( #FF0B259A ) 
-rectangle ( 0 , 800 , ancho , 400 )
-

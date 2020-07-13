@@ -1,2 +1,0 @@
-// Generated with Meta_Processing Alpha 1.2
-// https://github.com/hiteclab/Meta_Processing/releases
