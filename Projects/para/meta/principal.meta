@@ -1,0 +1,6 @@
+fondo ( 0 ) 
+para ( desde 0 ; mientras ciclo < 300 ; Incremento 30 )
+    aleatorio ( c , 255 )
+    relleno ( c ) 
+    rectángulo ( ciclo , 80 , 20 , 20 )
+

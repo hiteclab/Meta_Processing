@@ -1,0 +1,52 @@
+[
+  {
+    "pde": "background( px );",
+    "id": 98,
+    "colorv": "px",
+    "instruccion": "fondo"
+  },
+  {
+    "pde": "px = px + 0.5;",
+    "variable": "px",
+    "valor": "0.5",
+    "id": 62,
+    "instruccion": "sumar"
+  },
+  {
+    "pde": "py = py - 0.5;",
+    "variable": "py",
+    "valor": "0.5",
+    "id": 63,
+    "instruccion": "restar"
+  },
+  {
+    "pde": "fill( #F2E138 );",
+    "id": 102,
+    "colorh": "FFF2E138",
+    "instruccion": "relleno"
+  },
+  {
+    "pde": "ellipse( 200, py, 200, 200 );",
+    "tx": 200,
+    "ty": 200,
+    "px": 200,
+    "id": 101,
+    "pyv": "py",
+    "instruccion": "elipse"
+  },
+  {
+    "pde": "fill( #0B259A );",
+    "id": 102,
+    "colorh": "FF0B259A",
+    "instruccion": "relleno"
+  },
+  {
+    "pde": "rect( 0, 800, ancho, 400 );",
+    "txv": "ancho",
+    "ty": 400,
+    "px": 0,
+    "py": 800,
+    "id": 114,
+    "instruccion": "rectangulo"
+  }
+]

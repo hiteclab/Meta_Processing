@@ -1,0 +1,5 @@
+entradadigital ( 4, esp ) 
+si  ( esp > 0 )
+    fondo ( #FF56CA38 ) 
+Sino           fondo ( #FFC73438 ) 
+
