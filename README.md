@@ -41,7 +41,7 @@ Desarrollado usando [Processing](https://processing.org/) 3.4
 En el laboratorio Hiteclab, http://hiteclab.libertadores.edu.co
 Fundación Universitaria Los Libertadores, Bogotá, Colombia
 
-Un proyecto deribado de META_PROCESSING es [META_JAVASCRIPT](https://github.com/hiteclab/Meta_Javascript) donde todo el código creado es exportado como código en lenguaje Javascript.
+Un proyecto derivado de META_PROCESSING es [META_JAVASCRIPT](https://github.com/hiteclab/Meta_Javascript) donde todo el código creado es exportado como código en lenguaje Javascript.
 
 **Descargar Libro Meta_Processing Alpha 1.1**
 [Versión Español](https://github.com/hiteclab/Meta_Processing/raw/master/MetaprocessingAlpha1.1ESP.pdf)
