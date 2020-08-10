@@ -1,0 +1,114 @@
+[
+  {
+    "pde": "if( tecla == 'a' )",
+    "valor1v": "tecla",
+    "visible": true,
+    "id": 105,
+    "valor2": "'a'",
+    "condicion": "=",
+    "instruccion": "si"
+  },
+  {
+    "pde": "nota.playNote( \"C4\" );",
+    "si": true,
+    "id": 110,
+    "nota": "C4",
+    "instruccion": "tocanota"
+  },
+  {
+    "pde": "if( tecla == 's' )",
+    "valor1v": "tecla",
+    "visible": true,
+    "id": 105,
+    "valor2": "'s'",
+    "condicion": "=",
+    "instruccion": "si"
+  },
+  {
+    "pde": "nota.playNote( \"D4\" );",
+    "si": true,
+    "id": 110,
+    "nota": "D4",
+    "instruccion": "tocanota"
+  },
+  {
+    "pde": "if( tecla == 'd' )",
+    "valor1v": "tecla",
+    "visible": true,
+    "id": 105,
+    "valor2": "'d'",
+    "condicion": "=",
+    "instruccion": "si"
+  },
+  {
+    "pde": "nota.playNote( \"E4\" );",
+    "si": true,
+    "id": 110,
+    "nota": "E4",
+    "instruccion": "tocanota"
+  },
+  {
+    "pde": "if( tecla == 'f' )",
+    "valor1v": "tecla",
+    "visible": true,
+    "id": 105,
+    "valor2": "'f'",
+    "condicion": "=",
+    "instruccion": "si"
+  },
+  {
+    "pde": "nota.playNote( \"F4\" );",
+    "si": true,
+    "id": 110,
+    "nota": "F4",
+    "instruccion": "tocanota"
+  },
+  {
+    "pde": "if( tecla == 'g' )",
+    "valor1v": "tecla",
+    "visible": true,
+    "id": 105,
+    "valor2": "'g'",
+    "condicion": "=",
+    "instruccion": "si"
+  },
+  {
+    "pde": "nota.playNote( \"G4\" );",
+    "si": true,
+    "id": 110,
+    "nota": "G4",
+    "instruccion": "tocanota"
+  },
+  {
+    "pde": "if( tecla == 'h' )",
+    "valor1v": "tecla",
+    "visible": true,
+    "id": 105,
+    "valor2": "'h'",
+    "condicion": "=",
+    "instruccion": "si"
+  },
+  {
+    "pde": "nota.playNote( \"A4\" );",
+    "si": true,
+    "id": 110,
+    "nota": "A4",
+    "instruccion": "tocanota"
+  },
+  {
+    "pde": "if( tecla == 'j' )",
+    "valor1v": "tecla",
+    "visible": true,
+    "id": 105,
+    "valor2": "'j'",
+    "condicion": "=",
+    "instruccion": "si"
+  },
+  {
+    "pde": "nota.playNote( \"B4\" );",
+    "si": true,
+    "id": 110,
+    "nota": "B4",
+    "instruccion": "tocanota"
+  }
+]
