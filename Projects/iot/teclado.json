@@ -1,7 +1,0 @@
-[{
-  "pde": "loadStrings(\"http://192.168.4.1/?SDPIN=12&STATE=0\");",
-  "pin": 12,
-  "valor": 0,
-  "id": -10,
-  "instruccion": "salidadigital"
-}]

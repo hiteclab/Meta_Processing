@@ -1,6 +1,0 @@
-void mousePressed(){
- click=mouseButton;
-
-
-
-}

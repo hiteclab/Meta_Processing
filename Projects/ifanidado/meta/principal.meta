@@ -1,7 +1,0 @@
-fondo ( #FF1FD238 ) 
-si  ( ratonX > 100 )
-si  ( ratonX < 200 )
-si  ( ratonY > 100 )
-si  ( ratonY < 200 )
-    rectángulo ( 100 , 100 , 100 , 100 )
-
