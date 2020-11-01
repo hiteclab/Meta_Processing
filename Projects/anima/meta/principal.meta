@@ -1,8 +1,0 @@
-fundo ( px ) 
-add ( px , 0.5 )
-subtrair ( py , 0.5 )
-enchimento ( #FFF2E138 ) 
-elipse ( 200 , py , 200 , 200 )
-enchimento ( #FF0B259A ) 
-retângulo ( 0 , 800 , ancho , 400 )
-

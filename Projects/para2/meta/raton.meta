@@ -1,6 +1,0 @@
-fondo ( 255 ) 
-para ( desde 10 ; mientras ciclo < 1920 ; Incremento 50 )
-    línea ( ciclo , 0 , ciclo , alto ) 
-para ( desde 10 ; mientras ciclo < 1080 ; Incremento 50 )
-    línea ( 0 , ciclo , ancho , ciclo ) 
-
