@@ -1,0 +1,17 @@
+[
+  {
+    "valorinicial": "0",
+    "tipo": 0,
+    "nombre": "px"
+  },
+  {
+    "valorinicial": "0",
+    "tipo": 0,
+    "nombre": "py"
+  },
+  {
+    "valorinicial": "0",
+    "tipo": 0,
+    "nombre": "contador"
+  }
+]

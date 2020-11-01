@@ -1,0 +1,34 @@
+[
+  {
+    "pde": "if( click == 37 )",
+    "valor1v": "click",
+    "visible": true,
+    "id": 105,
+    "valor2": "37",
+    "condicion": "=",
+    "instruccion": "si"
+  },
+  {
+    "pde": "background( #0DBF38 );",
+    "si": true,
+    "id": 98,
+    "colorh": "FF0DBF38",
+    "instruccion": "fondo"
+  },
+  {
+    "pde": "if( click == 3 )",
+    "valor1v": "click",
+    "visible": true,
+    "id": 105,
+    "valor2": "3",
+    "condicion": "=",
+    "instruccion": "si"
+  },
+  {
+    "pde": "background( #D93738 );",
+    "si": true,
+    "id": 98,
+    "colorh": "FFD93738",
+    "instruccion": "fondo"
+  }
+]

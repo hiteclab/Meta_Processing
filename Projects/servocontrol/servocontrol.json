@@ -1,0 +1,36 @@
+[
+  {
+    "pde": "arduino.pinMode(7, Arduino.SERVO);\narduino.servoWrite(7, int(angle));",
+    "pin": 7,
+    "variable": "angle",
+    "id": 13,
+    "instruccion": "servo"
+  },
+  {
+    "pde": "value = arduino.analogRead(0);\n",
+    "pin": 0,
+    "variable": "value",
+    "id": 12,
+    "instruccion": "entradaanalogica"
+  },
+  {
+    "pde": "angle = (value*180)/1024;",
+    "formula": "angle = (value*180)/1024;",
+    "id": 66,
+    "instruccion": "formula"
+  },
+  {
+    "pde": "background( #3EDE38 );",
+    "id": 98,
+    "colorh": "FF3EDE38",
+    "instruccion": "fondo"
+  },
+  {
+    "texto": "\"+value+\"",
+    "pde": "text( \"\"+value+\"\", 50, 50 );",
+    "px": 50,
+    "py": 50,
+    "id": 116,
+    "instruccion": "texto"
+  }
+]

@@ -1,0 +1,6 @@
+servo ( 7, angle ) 
+entradaanalógica ( 0, value ) 
+angle = (value*180)/1024;
+fondo ( #FF3EDE38 ) 
+texto ( "+value+" , 50 , 50 )
+

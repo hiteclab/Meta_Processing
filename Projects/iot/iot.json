@@ -1,0 +1,32 @@
+[
+  {
+    "pde": "esp = int(loadStrings(\"http://192.168.4.1/?EDPIN=4\")[0]);",
+    "pin": 4,
+    "variable": "esp",
+    "id": -11,
+    "instruccion": "entradadigital"
+  },
+  {
+    "pde": "if( esp > 0 )",
+    "valor1v": "esp",
+    "visible": true,
+    "id": 105,
+    "valor2": "0",
+    "condicion": ">",
+    "instruccion": "si"
+  },
+  {
+    "pde": "background( #56CA38 );",
+    "si": true,
+    "id": 98,
+    "colorh": "FF56CA38",
+    "instruccion": "fondo"
+  },
+  {
+    "pde": "background( #C73438 );",
+    "sino": true,
+    "id": 98,
+    "colorh": "FFC73438",
+    "instruccion": "fondo"
+  }
+]

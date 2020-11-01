@@ -1,0 +1,15 @@
+[
+  {
+    "pde": "background( px );",
+    "id": 98,
+    "colorv": "px",
+    "instruccion": "fondo"
+  },
+  {
+    "pde": "px = px + 0.5;",
+    "variable": "px",
+    "valor": "0.5",
+    "id": 62,
+    "instruccion": "sumar"
+  }
+]

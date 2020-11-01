@@ -1,0 +1,7 @@
+[{
+  "pde": "arduino.digitalWrite( 2, Arduino.HIGH );",
+  "pin": 2,
+  "valor": 1,
+  "id": 10,
+  "instruccion": "salidadigital"
+}]

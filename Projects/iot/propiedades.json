@@ -1,0 +1,25 @@
+[
+  {
+    "pantalla": 1,
+    "pantallacompleta": false,
+    "id": 0,
+    "configuracion": "medidas",
+    "tamx": 500,
+    "tamy": 500
+  },
+  {
+    "cuadros": 60,
+    "id": 1,
+    "configuracion": "velocidad"
+  },
+  {
+    "puerto": 0,
+    "id": 2,
+    "configuracion": "puerto"
+  },
+  {
+    "ip": "192.168.4.1",
+    "id": 3,
+    "configuracion": "ip"
+  }
+]
