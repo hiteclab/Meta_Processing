@@ -4654,6 +4654,7 @@ class PWindow3 extends PApplet {
       }
     } else {
       if (key != CODED && keyCode != ENTER)datos= datos+key;
+      if (key != CODED && keyCode != ENTER && proyecto == true && key != ' ')datos= datos+key;
     }
 
     return datos;
