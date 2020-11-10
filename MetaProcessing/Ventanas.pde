@@ -4653,7 +4653,7 @@ class PWindow3 extends PApplet {
         datos= datos.substring(0, datos.length()-1);
       }
     } else {
-      if (key != CODED && keyCode != ENTER)datos= datos+key;
+      if (key != CODED && keyCode != ENTER && proyecto == false)datos= datos+key;
       if (key != CODED && keyCode != ENTER && proyecto == true && key != ' ')datos= datos+key;
     }
 
